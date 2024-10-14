@@ -1,0 +1,35 @@
+<form action="" method="get">
+  text : <input name="text" type="text" /><br />
+  password : <input name="password" type="password" /><br />
+  checkbox1 : <input name="checkbox" type="checkbox" value="1" /><br />
+  checkbox2 : <input name="checkbox" type="checkbox" value="2" /><br />
+  checkbox3 : <input name="checkbox" type="checkbox" value="3" /><br />
+  checkbox4 : <input name="on|off" type="checkbox" /><br />
+  radio1 : <input name="radio" type="radio" value="female" /><br />
+  radio2 : <input name="radio" type="radio" value="male" /><br />
+  email : <input name="email" type="email" /><br />
+  number : <input name="number" type="number" /><br />
+  color : <input name="color" type="color" /><br />
+  date : <input name="date" type="date" /><br />
+  datetime : <input name="datetime" type="datetime" /><br />
+  datetime-local : <input name="datetime-local" type="datetime-local" /><br />
+  time : <input name="time" type="time" /><br />
+  image : <input name="image" type="image" /><br />
+  file : <input name="file" type="file" /><br />
+  month : <input name="month" type="month" /><br />
+  week : <input name="week" type="week" /><br />
+  range : <input name="range" type="range" /><br />
+  search : <input name="search" type="search" /><br />
+  tel : <input name="tel" type="tel" /><br />
+  url : <input name="url" type="url" /><br />
+  hidden : <input name="hidden" type="hidden" /><br />
+  submmit : <input name="submmit" type="submit" value="Send" />
+</form>
+<script>
+  const searchParams = new URLSearchParams(location.search);
+
+  for (const param of searchParams) {
+    console.log(param);
+    document.write(`${param}<br>`);
+  }
+</script>

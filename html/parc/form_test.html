@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      <h1>숙소 예약</h1>
+      <h2>신상 정보</h2>
+
+      <label for="name">이름 : </label
+      ><input type="text" name="name" id="name" placeholder="이름 입력" /><br />
+      <label for="email">이메일 : </label
+      ><input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="이메일 입력"
+      /><br />
+      <label for="file">예약사 사진 : </label
+      ><input type="file" name="file" id="file" /><br />
+
+      <hr />
+
+      <h2>상세 정보</h2>
+      <h3>선호 객실 타입</h3>
+      <label for="city">도시뷰 : </label
+      ><input type="radio" name="room_type" id="city" value="city"/>
+      <label for="lake">레이크뷰 : </label
+      ><input type="radio" name="room_type" id="lake" value="lake"/>
+      <label for="mountain">마운틴뷰 : </label
+      ><input type="radio" name="room_type" id="mountain" value="mountain"/>
+
+      <h3>동행자 정보</h3>
+      <label for="number">인원수 : </label
+      ><input type="number" name="number" id="number" />
+
+      <h3>기타</h3>
+      <label for="etc">요청사항 : </label>
+      <textarea name="etc" id="etc" cols="30" rows="10">YoYo</textarea>
+
+      <hr />
+
+      <input type="submit" value="전송" />
+    </form>
+    <script>
+      const form = document.querySelector('form');
+      console.log(form);
+      const searchParams = new URLSearchParams(location.search);
+
+      for (const param of searchParams) {
+        console.log(param);
+        document.write(`${param}<br>`);
+      }
+    </script>
+  </body>
+</html>
