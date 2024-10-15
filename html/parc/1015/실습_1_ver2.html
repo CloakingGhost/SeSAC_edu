@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .box-small {
+      width: 100px;
+      height: 100px;
+    }
+    .box-big {
+      width: 200px;
+      height: 200px;
+    }
+    .bk-blue {
+      background-color: blue;
+    }
+    .bk-green {
+      background-color: green;
+    }
+    .text-right {
+      text-align: right;
+    }
+    .font-32 {
+      font-size: 32px;
+    }
+    .text-red {
+      color: red;
+    }
+  </style>
+  <body>
+    <br />
+    <!-- 폰트사이즈 32px, 글씨 빨간색, 글씨 우측정렬 -->
+    <div class="font-32 text-red text-right">Hello CSS</div>
+
+    <br />
+    <!-- 글자는 기본을 따라감 -->
+    <!-- 가로 100px, 세로 100px, 배경색 파란색 -->
+    <div class="box-small bk-blue">Hello CSS</div>
+
+    <br />
+    <!-- 가로 200px, 세로 200px, 배경색 초록색, 글씨 빨간색-->
+    <div class="box-big bk-green text-red">
+      Hello CSS
+      <!-- 가로 100px, 세로 100px, 글씨 빨간색 -->
+      <div class="box-small bk-blue">Hello CSS</div>
+    </div>
+  </body>
+</html>
