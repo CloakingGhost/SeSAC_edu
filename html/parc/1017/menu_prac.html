@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .sticky {
+        background-color: #fff;
+        position: sticky;
+        padding: 10px 0;
+        top: 0;
+      }
+
+      .title {
+        text-align: center;
+        box-sizing: border-box;
+      }
+      h1.title {
+        color: brown;
+        margin: 0;
+      }
+      .wv-80 {
+        width: 80vw;
+      }
+
+      .d-flex-center {
+        display: flex;
+        justify-content: center;
+      }
+      .d-flex-between {
+        display: flex;
+        justify-content: space-between;
+      }
+      .d-flex-between > div:first-child {
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body style="height: 3000px">
+    <!-- container start -->
+    <div class="container">
+      <header class="sticky"><h1 class="title">MENU</h1></header>
+      <main class="d-flex-center">
+        <!-- div wv80 start-->
+        <div class="wv-80">
+          <!-- coffee start -->
+          <header class="sticky">
+            <h2 class="title">COFFEE</h2>
+          </header>
+          <article>
+            <hr />
+            <div class="d-flex-between">
+              <div>아메리카노</div>
+              <div>5.0/5.5</div>
+            </div>
+            <div class="d-flex-between">
+              <div>카페라떼</div>
+              <div>6.0/6.5</div>
+            </div>
+            <div class="d-flex-between">
+              <div>바닐라라떼</div>
+              <div>6.0/6.5</div>
+            </div>
+            <div class="d-flex-between">
+              <div>카라멜마끼아또</div>
+              <div>6.5/7.0</div>
+            </div>
+          </article>
+          <!-- coffee end -->
+
+          <!-- ade start -->
+          <header class="sticky">
+            <h2 class="title">ADE</h2>
+          </header>
+          <article>
+            <hr />
+            <div class="d-flex-between">
+              <div>레몬에이드</div>
+              <div>6.0</div>
+            </div>
+            <div class="d-flex-between">
+              <div>자몽에이드</div>
+              <div>6.0</div>
+            </div>
+            <div class="d-flex-between">
+              <div>유자에이드</div>
+              <div>6.0</div>
+            </div>
+          </article>
+          <!-- ade start -->
+        </div>
+        <!-- div wv80 end-->
+      </main>
+    </div>
+    <!-- container end -->
+  </body>
+</html>
