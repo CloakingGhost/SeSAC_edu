@@ -1,0 +1,27 @@
+.big-box {
+  width: 500px;
+  height: 500px;
+  border: 1px solid black;
+}
+
+.box {
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid black;
+  box-sizing: border-box;
+}
+
+.d-flex {
+  display: flex;
+}
+.d-flex-justify-content-center {
+  justify-content: center;
+}
+.d-flex-align-items-center {
+  align-items: center;
+}
+.d-flex-justify-content-between {
+  justify-content: space-between;
+}
