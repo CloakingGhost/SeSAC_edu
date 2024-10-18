@@ -19,7 +19,7 @@ console.log(score >= 60 ? 'pass' : 'fail')
 
 
 const number1 = 10
-if (typeof number1 === 'Number') {
+if (typeof number1 !== 'number') {
   console.log('Hello World\n숫자가 아니다.')
 }
 else if (number1 < 10) {
