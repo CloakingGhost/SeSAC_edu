@@ -76,13 +76,17 @@ console.log(`minNum: ${minNum}`)
 // Reverse List
 
 nums = [10, 6, 8, 5, 4]
-const reversedNum = []
+let reversedNum = []
 
 for (const i in nums) {
   reversedNum.push(nums[nums.length - 1 - i])
 }
-
 console.log(reversedNum)
 
 
+reversedNum = []
 
+for(const num of nums){
+  reversedNum.unshift(num)
+}
+console.log(reversedNum)
