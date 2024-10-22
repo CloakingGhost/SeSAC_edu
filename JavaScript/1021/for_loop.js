@@ -25,7 +25,7 @@ let names = [1, 2, 3]
 //Multiplication table
 let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-// for(const idx in nums) {구구단cnf
+// for(const idx in nums) {구구단
 //   console.log(nums[idx] * 3)
 // }
 
@@ -90,3 +90,14 @@ for(const num of nums){
   reversedNum.unshift(num)
 }
 console.log(reversedNum)
+
+
+
+let person = {
+  name: '홍길동',
+  age: 30,
+  job: '개발자',
+};
+for(const key in person){
+  console.log(key, person[key])
+}
