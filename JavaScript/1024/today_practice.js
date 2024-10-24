@@ -48,7 +48,8 @@ todos = [
     "isCompleted": true
   }
 ]
-todos.filter(todo => todo.isCompleted).forEach(todo => console.log(todo))
+todos.filter(todo => todo.isCompleted)
+  .forEach(todo => console.log(todo))
 
 const matrix = [[4, 2], [3, 2], [5, 7], [10, 1]]
 matrix.forEach(row => console.log(row[1]))
