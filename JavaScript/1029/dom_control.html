@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .active {
+        color: red;
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="my-element" class="inactive">내용</div>
+
+    <script>
+      const element = document.querySelector('#my-element');
+
+      // 클래스 목록에 새로운 클래스 추가
+      element.classList.add('active');
+
+      // 클래스 목록에서 클래스 제거
+      element.classList.remove('inactive');
+
+      // 클래스 토글
+      // 클래스 목록에 클래스가 없으면 추가
+      // 클래스 목록에 클래스가 있으면 제거
+      element.classList.toggle('hidden');
+
+      // 클래스 포함 여부 확인
+      if (element.classList.contains('active')) {
+        console.log('활성화 상태입니다.');
+      }
+
+      console.log(element.classList);
+      /**
+        {
+          "0": "active",
+          "1": "hidden"
+        }
+      **/
+    </script>
+  </body>
+</html>
