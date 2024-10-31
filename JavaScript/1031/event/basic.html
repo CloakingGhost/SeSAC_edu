@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button>클릭</button>
+
+    <script>
+      // 1. 요소
+      const button = document.querySelector('button');
+      // 2. 동작
+      // 3. 트리거
+      button.addEventListener('click', (event) => {
+        console.log(this);
+        console.log(event.target);
+        console.log('화살표 함수');
+      });
+      button.addEventListener('click', function (event) {
+        console.log(this);
+        console.log('그냥 함수');
+      });
+    </script>
+  </body>
+</html>

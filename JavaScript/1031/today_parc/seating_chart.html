@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      .frame {
+      }
+      .mr-2 {
+        margin-right: 20px;
+      }
+      .box {
+        width: 100px;
+        height: 50px;
+        border: 1px solid black;
+        margin: 1px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .container {
+        margin: auto;
+        display: flex;
+        justify-content: center;
+      }
+      .btn-set {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="frame">
+        <div class="box col">X</div>
+        <div class="box col"></div>
+        <div class="box col"></div>
+        <div class="box col"></div>
+        <div class="box col"></div>
+        <div class="box col"></div>
+        <div class="box col"></div>
+      </div>
+      <div class="frame mr-2">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+      </div>
+      <div class="frame">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+      </div>
+      <div class="frame">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box">X</div>
+        <div class="box">X</div>
+        <div class="box">X</div>
+        <div class="box">X</div>
+      </div>
+    </div>
+    <div class="btn-set">
+      <div><button type="button" class="mr-2" id="shuffle">드가자</button></div>
+      <div><button type="button" class="mr-2" id="reset">Reset</button></div>
+      <div><button type="button" class="mr-2" id="clear">Clear</button></div>
+    </div>
+    <script>
+      // 23명
+      const names = [
+        '이태영',
+        '박재훈',
+        '임유진',
+        '차윤선',
+        '서승덕',
+        '육슬찬',
+        '윤대정',
+        '오예진',
+        '정여원',
+        '정승연',
+        '이상호',
+        '임수빈',
+        '정명훈',
+        '이재현',
+        '박하은',
+        '김동훈',
+        '가경식',
+        '강경훈',
+        '최원호',
+        '노영재',
+        '박종빈',
+        '김상호',
+        '원성준',
+      ];
+      const temp = [];
+      console.log(names.length);
+      const boxs = document.querySelectorAll('.box');
+      let flag = true;
+      function setSeating() {
+        // console.log(names.length ? names : temp)
+        shuffle(names.length ? names : temp);
+        boxs.forEach((box) => {
+          if (box.textContent !== 'X') {
+            if (flag) {
+              const name = names.pop();
+              box.textContent = name;
+              if (name) {
+                temp.push(name);
+              }
+            } else {
+              const name = temp.pop();
+              box.textContent = name;
+              if (name) {
+                names.push(name);
+              }
+            }
+          }
+        });
+        console.log(temp);
+        console.log(names);
+        
+        flag = !flag;
+      }
+
+      function shuffle(array) {
+        array.sort(() => Math.random() - 0.5);
+      }
+
+      boxs.forEach((box) => {
+        box.addEventListener('click', () => {
+          // 빈칸의 개수가 전체 인원수보다 많거나 같아야함
+          //
+          if (box.textContent === 'X') {
+            box.textContent = '';
+          } else if (!box.textContent) {
+            box.textContent = 'X';
+          }
+        });
+      });
+      const shuffleBtn = document.querySelector('#shuffle');
+      shuffleBtn.addEventListener('click', () => {
+        setSeating();
+      });
+
+      // 리셋 버튼
+      const resetBtn = document.querySelector('#reset');
+      resetBtn.addEventListener('click', reset);
+      function reset() {
+        boxs.forEach((box) => {
+          if (box.textContent !== 'X') box.textContent = '';
+        });
+      }
+
+      // 클리어 버튼
+      const clearBtn = document.querySelector('#clear');
+      clearBtn.addEventListener('click', clear);
+      function clear() {
+        boxs.forEach((box) => {
+          box.textContent = '';
+        });
+      }
+
+      // 돌릴 때, X 개수 + 인원수 = 총 자리수 아니면 X 지정하도록
+      // 인원 빼기, 뺀 사람 또 뺄때 예외처리, 뺀 사람은 화면에 표시
+      // 인원 추가, 원 배열에 추가 names 와 temp 중 빈 배열이 아닌 곳에 넣기
+
+      // 근본적으로 전체 자리를 기준으로 랜덤은 못돌리나..? 중간중간 빈값넣어서 말이지
+    
+    </script>
+  </body>
+</html>

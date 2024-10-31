@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: black;
+      }
+
+      .container {
+        margin: 1rem;
+        padding: 1rem;
+      }
+      .hidden {
+        /* display: none; */ /* 공간까지 사라짐 */
+        visibility: hidden; /* 공간은 남김 */
+      }
+      .bk-tomato {
+        background-color: tomato;
+      }
+      .color-blue {
+        color: blue;
+      }
+
+      .color-tomato {
+        color: tomato;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- html 코드도 자유롭게 수정하세요! -->
+
+    <!-- button을 클릭하면 원본 텍스트가 "텍스트가 바뀜"으로 변하도록 구현하시오. -->
+    <div class="container" id="c1">
+      <div>바뀔 예정인 텍스트</div>
+      <button>클릭</button>
+    </div>
+    <script>
+      const btn = document.querySelector('#c1 > button');
+      btn.addEventListener('click', () => {
+        const div = btn.previousElementSibling;
+        div.textContent = 'Changing Text';
+      });
+    </script>
+
+    <!-- 무언가를 클릭하면 원본 텍스트가 빨간색으로, 다른 무언가를 클릭하면 원본 텍스트가 파란색으로 변하도록 구현하시오. -->
+    <div class="container" id="c2">
+      <div class="color-tomato">이 텍스트의 색상을 바꾸세요!</div>
+    </div>
+    <script>
+      const c2_div = document.querySelector('#c2 > div.color-tomato');
+      c2_div.addEventListener('click', (event) => {
+        event.target.style.color = getRGB();
+      });
+      function getRGB() {
+        const R = Math.floor((Math.random() * 1000) % 255);
+        const G = Math.floor((Math.random() * 1000) % 255);
+        const B = Math.floor((Math.random() * 1000) % 255);
+        return `rgb(${R}, ${G}, ${B})`;
+      }
+    </script>
+    <!-- button을 클릭하면 텍스트가 보였다 안보였다 바뀌도록 구현하시오. -->
+    <!-- display : hidden 속성 및 class를 활용합니다. -->
+    <div class="container">
+      <div>보였다 안보였다</div>
+      <button id="btn-1">클릭</button>
+    </div>
+    <script>
+      // display: none 을 클래스 선택자로 만든다
+      // div에 클래스를 토글한다
+      // js로 클래스 선택자를 추가할 수는 있는데
+      const btn1 = document.querySelector('#btn-1');
+      btn1.addEventListener('click', () => {
+        btn1.previousElementSibling.classList.toggle('hidden');
+      });
+    </script>
+    <!-- 입력을 하면 입력한 text가 아래의 div태그에 표현되도록 바꾸시오. -->
+    <!-- hint : input의 입력값은 value로 표현된다. -->
+    <div class="container">
+      <input id="insert" type="text" autocomplete="off" />
+      <div id="result"></div>
+    </div>
+    <script>
+      const insert = document.querySelector('#insert');
+      insert.addEventListener('input', (event) => {
+        const result = document.querySelector('#result');
+        result.textContent = insert.value;
+      });
+    </script>
+
+    <!-- 마우스를 올리면 배경색이 빨간색으로 변하고, 내리면 다시 검정색으로 변하는 기능을 구현하시오. -->
+    <div class="container">
+      <div class="box" id="box-1"></div>
+    </div>
+    <script>
+      const box_1 = document.querySelector('#box-1');
+      box_1.addEventListener('mouseover', () => {
+        box_1.classList.add('bk-tomato');
+      });
+      box_1.addEventListener('mouseout', () => {
+        box_1.classList.remove('bk-tomato');
+      });
+    </script>
+
+    <!-- 버튼을 누르면 숫자가 1 증가하는 기능을 구현하시오 -->
+    <div class="container">
+      <div id="score">0</div>
+      <button id="up-btn">버튼</button>
+    </div>
+    <script>
+      const score = document.querySelector('#score');
+      const upBtn = document.querySelector('#up-btn');
+      upBtn.addEventListener('click', () => {
+        score.textContent++;
+      });
+    </script>
+
+    <!-- 색상을 입력하면 텍스트의 색이 변하는 기능을 구현하시오. -->
+    <div class="container">
+      <h1 id="title">what color am I</h1>
+      <input type="color" id="color-set" />
+    </div>
+    <script>
+      const title = document.querySelector('#title');
+      const colorSet = document.querySelector('#color-set');
+      colorSet.addEventListener('change', (event) => {
+        title.style.color = event.target.value;
+      });
+    </script>
+  </body>
+</html>

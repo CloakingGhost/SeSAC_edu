@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="text">바뀔 예정 text</div>
+    
+  </body>
+  <script>
+    const oldDiv = document.querySelector('#text')
+    const newDiv = document.createElement('div')
+    newDiv.textContent = "새로 만들었음둥"
+    newDiv.id = "new-one"
+    oldDiv.append(newDiv)
+
+  </script>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      #box {
+        background-color: aquamarine;
+        width: 100px;
+        height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box"></div>
+    <script>
+      let timer = setInterval(changeColor, 1000);
+      // 박스 찾기
+      const box = document.querySelector('#box');
+
+      // 이벤트 추가
+      box.addEventListener('click', () => {
+        box.style.backgroundColor = getRGB();
+      });
+
+      function changeColor() {
+        box.click();
+      }
+
+      function getRGB() {
+        const R = Math.floor((Math.random() * 1000) % 255);
+        const G = Math.floor((Math.random() * 1000) % 255);
+        const B = Math.floor((Math.random() * 1000) % 255);
+        return `rgb(${R}, ${G}, ${B})`;
+      }
+    </script>
+  </body>
+</html>
