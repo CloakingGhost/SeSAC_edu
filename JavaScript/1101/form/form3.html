@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      <div>title</div>
+      <input type="text" name="title" />
+      <div>body</div>
+      <input type="text" name="body" />
+      <input type="submit" />
+    </form>
+    <script>
+      const form = document.querySelector('form');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form); //'Content-type': 'multipart/form-data' 자동 삽입 됨
+        // console.log(formData)
+        // const objectData = Object.entries(formData); //객체를 배열로
+        const objectData = Object.fromEntries(formData);
+        console.log(objectData);
+        const response = await fetch(
+          // 해당 서버 multipart/form-data 취급 안함
+          'https://jsonplaceholder.typicode.com/posts',
+          {
+            method: 'POST',
+            body: JSON.stringify(objectData),
+            // body: new FormData(form), // 파일, 이미지, 영상 등등
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+              // 'Content-type': 'multipart/form-data',
+            },
+          }
+        );
+
+        const data = await response.json();
+        const { title, body } = data;
+
+        const divTag = document.createElement('div');
+        divTag.textContent = `${title} : ${body}`;
+        document.querySelector('body').append(divTag);
+      });
+    </script>
+  </body>
+</html>

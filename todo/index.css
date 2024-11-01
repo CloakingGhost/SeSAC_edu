@@ -1,0 +1,22 @@
+.container {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.del {
+  text-decoration: line-through;
+}
+
+.todo{
+  display: flex;
+  padding: 10px;
+  box-sizing: content-box;
+  background-color: rgba(220, 220, 220, 0.5);
+  border-radius: 4px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.valid{
+  border: 2px solid rgba(255, 0, 0, 0.5);
+}
