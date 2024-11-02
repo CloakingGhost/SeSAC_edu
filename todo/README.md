@@ -1,52 +1,41 @@
 # Todo List
 
-## 프로젝트 설명
-
-- 기초적인 Todo List 서비스로 사용자가 할 일을 추가, 삭제, 완료 표시를 할 수 있다.
-- json-server를 활용해 간이 서버를 만들어서 활용하고, Axios를 사용해서 HTTP 요청하고, 응답을 처리한다.
-- AJAX를 적용해서 사용자 경험을 향상시킨다.
-
-## 주요 기능
-
-- 할 일 목록 조회
-- 할 일 추가
-- 할 일 삭제
-- 할 일 완료 상태 수정
-
-### 기능 구현
-
-- `app.js` 파일을 수정해서 아래 기능을 구현한다.
-- Todo 요소 화면 렌더링
-- Todo 생성
-- Todo 상태 변경
-- Todo 삭제
-- 기능 구현 후 Todo List 서비스에 적합한 웹 페이지를 디자인한다.
-
-## 기술 스택
-
+### Tech Stack
 - HTML
 - CSS
 - JavaScript
 
-## 라이브러리
+### Runtime Environment
+- Node.js
 
+### Web Server
+- Live Server
+
+### API Server (Mock)
 - json-server@0.17.4
+
+### Library
 - axios
 
-## 설치 및 실행
+### IDE
+- VSCode(Visual Studio Code)
 
-1. 패키지 설치
+## 주요기능  
+- CRUD  
+    - 생성: Enter키를 눌러 목록에 추가  
+        - 유효성 검사를 통해 의미있는 할 일 추가
+    - 조회: 전체 목록을 불러와 한 눈에 확인 가능
+    - 수정: 완료 상태를 버튼으로 하여 할 일 취소선 표시
+        - 데이터 베이스에 상태 즉시 반영
+    - 삭제: 더 이상 필요없는 할 일을 목록에서 삭제
+        - 삭제 확인 메시지를 통해 사용자의 실수 방지
+- 비동기 처리
+    - RESTful API를 통해 요청이 완료될 때까지 기다리지 않음
+    - axios 라이브러리 사용
+- 중복 전송 방지
+    - Enter키로 데이터 전송 시 isSubmitting 플래그를 사용하여 중복 방지
+    - 네트워크 트래픽을 줄임
+- 시작 시 데이터 초기화(`DOMContentLoaded` 이벤트)
+    - 할 일 목록을 불러오고 화면에 렌더링 하여 사용자가 바로 확인 가능
 
-```bash
-npm install
-```
-
-2. json-server 실행
-
-```bash
-node server.js
-```
-
-3. index.html 파일을 브라우저로 실행한다.
-
-![imgae](./Animation.gif)
+    
