@@ -25,7 +25,8 @@ server.use((req, res, next) => {
 
     // key 순서 재정렬
     for (let key of keys) {
-      newObject[`${key}`] = req.body[`${key}`];
+      newObject[key] = req.body[key];
+      // newObject[`${key}`] = req.body[`${key}`]; // 이렇게 하니 모든 값이 string이지
     }
     req.body = newObject;
   }

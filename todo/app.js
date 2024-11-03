@@ -1,7 +1,7 @@
 //#region API URL
 /** @type {string} API EndPoint: todos, 할 일 목록 데이터 */
 const TODOS_URL = 'http://localhost:3000/todos';
-/** @type {string} API EndPoint: index 목록의 인덱스 */
+/** @type {string} API EndPoint: index, 목록의 인덱스 */
 const INDEX_URL = 'http://localhost:3000/index';
 //#endregion
 
@@ -23,7 +23,7 @@ let isSubmitting = false;
 
 /**
  * @typedef {Object} todoType 할 일
- * @property {number} id 아이디
+ * @property {string} id 아이디
  * @property {string} content 내용
  * @property {boolean} completed 완료 여부
  */
@@ -46,10 +46,10 @@ document.addEventListener('DOMContentLoaded', initTodos);
 todoList.addEventListener('click', async (e) => {
   const target = e.target;
 
-  // 완료버튼: 완료 상태 토글링 => DB(비동기=> 상태 변경 반영), UI(최소선)
+  // 완료버튼: 완료 상태 토글링 => DB(비동기 => 상태 변경 반영), UI(최소선)
   if (target.classList.contains('btn-info')) {
     const li = target.closest('li');
-    const id = parseInt(li.querySelector('input[name=id]').value);
+    const id = li.querySelector('input[name=id]').value;
     const content = li.querySelector('.content').textContent.trim();
 
     const todoDiv = li.querySelector('.todo');
@@ -65,12 +65,12 @@ todoList.addEventListener('click', async (e) => {
   // 삭제버튼: 목록 삭제
   else if (target.classList.contains('btn-danger')) {
     const li = target.closest('li');
-    const id = parseInt(i.querySelector('input[name=id]').value);
+    const id = li.querySelector('input[name=id]').value;
 
     const todoDiv = li.querySelector('.todo');
     const isCompleted = todoDiv.dataset.completed === 'true';
     const todoType = { id, completed: isCompleted };
-    // 확인 후 삭제 진행
+    // 클라이언트 응답 확인 후 삭제 진행
     if (isDelete(isCompleted)) {
       const result = await removeTodo(todoType);
       if (result) {
@@ -88,13 +88,13 @@ addTodoBtn.addEventListener('click', async (e) => {
   isSubmitting = true;
 
   const error = document.querySelector('#input-error');
-  const validationObj = validateValue(content.value);
-  content.classList.remove('valid');
+  const validationObj = validateValue(contentInput.value);
+  contentInput.classList.remove('valid');
   // 유효성 검사
   if (validationObj.result) {
     const response = await axios.post(
       TODOS_URL,
-      await createTodo(content.value)
+      await makeNewTodo(contentInput.value)
     );
     const data = response.data;
 
@@ -147,7 +147,7 @@ function createLiTag(todo) {
  * ```js
  * 
  * makeNewTodo('강의듣기')
- * // {id : 1, content : '강의듣기', completed : false}
+ * // {id : "1", content : '강의듣기', completed : false}
  * 
  * 
  * ```
@@ -157,7 +157,7 @@ async function makeNewTodo(content) {
   const index = response.data['index'];
   const updateIndex = await axios.put(INDEX_URL, { index: index + 1 });
   return {
-    id: index,
+    id: `${index}`,
     content,
     completed: false,
   };
@@ -190,11 +190,12 @@ function createTodoHTML(todo) {
  * @returns {Promise<todoType> | null} 변경된 todo || null
  */
 async function statusToggle(todo) {
+  console.log(todo)
   try {
     const response = await axios.put(`${TODOS_URL}/${todo.id}`, todo);
     return response.data;
   } catch (error) {
-    document.querySelector('input#input-error').textContent =
+    document.querySelector('span#input-error').textContent =
       '수정 중 오류가 발생했습니다. 다시 시도해주세요.';
     console.log(error);
     return null;
