@@ -1,5 +1,4 @@
 //#region API URL
-
 const TODOS_URL = 'http://localhost:3000/todos';
 const INDEX_URL = 'http://localhost:3000/index';
 //#endregion
@@ -10,6 +9,7 @@ const addTodoBtn = document.querySelector('#add-todo');
 const contentInput = document.querySelector('#todo-input');
 let isSubmitting = false; // 중복 전송 방지
 //#endregion
+
 //#region 초기 변수에 이벤트 추가
 
 // DOMContentLoaded : HTML 문서 로딩이 끝나면 실행되는 이벤트
