@@ -1,13 +1,39 @@
 //#region API URL
+/** @type {string} API EndPoint: todos, 할 일 목록 데이터 */
 const TODOS_URL = 'http://localhost:3000/todos';
+/** @type {string} API EndPoint: index 목록의 인덱스 */
 const INDEX_URL = 'http://localhost:3000/index';
 //#endregion
 
 //#region 초기 변수
+/** @type {Element | null} 투두 리스트*/
 const todoList = document.querySelector('#todo-list');
+
+/** @type {Element | null} 목록 추가 버튼*/
 const addTodoBtn = document.querySelector('#add-todo');
+
+/** @type {Element | null} 목록 내용 입력*/
 const contentInput = document.querySelector('#todo-input');
-let isSubmitting = false; // 중복 전송 방지
+
+/** @type {boolean} 중복 전송 방지*/
+let isSubmitting = false;
+//#endregion
+
+//#region @typedef 모음
+
+/**
+ * @typedef {Object} todoType 할 일
+ * @property {number} id 아이디
+ * @property {string} content 내용
+ * @property {boolean} completed 완료 여부
+ */
+
+/**
+ * @typedef {Object} validateValueType
+ * @property {boolean} result 사용가능 여부
+ * @property {string} message 확인 결과 문구
+ */
+
 //#endregion
 
 //#region 초기 변수에 이벤트 추가
@@ -23,14 +49,14 @@ todoList.addEventListener('click', async (e) => {
   // 완료버튼: 완료 상태 토글링 => DB(비동기=> 상태 변경 반영), UI(최소선)
   if (target.classList.contains('btn-info')) {
     const li = target.closest('li');
-    const id = li.querySelector('input[name=id]').value;
+    const id = parseInt(li.querySelector('input[name=id]').value);
     const content = li.querySelector('.content').textContent.trim();
 
     const todoDiv = li.querySelector('.todo');
     const isCompleted = todoDiv.dataset.completed === 'true';
-    const obj = { id, content, completed: !isCompleted };
+    const todoType = { id, content, completed: !isCompleted };
 
-    const result = await statusToggle(obj);
+    const result = await statusToggle(todoType);
     if (result) {
       statusToggleDisplay(target);
       todoDiv.dataset.completed = !isCompleted;
@@ -39,14 +65,14 @@ todoList.addEventListener('click', async (e) => {
   // 삭제버튼: 목록 삭제
   else if (target.classList.contains('btn-danger')) {
     const li = target.closest('li');
-    const id = li.querySelector('input[name=id]').value;
+    const id = parseInt(i.querySelector('input[name=id]').value);
 
     const todoDiv = li.querySelector('.todo');
     const isCompleted = todoDiv.dataset.completed === 'true';
-    const obj = { id, completed: isCompleted };
+    const todoType = { id, completed: isCompleted };
     // 확인 후 삭제 진행
     if (isDelete(isCompleted)) {
-      const result = await removeTodo(obj);
+      const result = await removeTodo(todoType);
       if (result) {
         removeTodoDisplay(target);
       }
@@ -96,8 +122,8 @@ contentInput.addEventListener('keydown', (e) => {
 //#region 함수 CRUD
 
 /**
- * @description Todo 목록 추가용 li 태그 생성
- * @param {object} todo
+ * @summary Todo 목록 추가용 li 태그 생성
+ * @param {todoType} todo
  * @returns {HTMLLIElement} return HTMLLIElement
  */
 function createLiTag(todo) {
@@ -109,25 +135,36 @@ function createLiTag(todo) {
   }
   return li;
 }
+
 /**
- * @description 목록 추가를 위한 데이터 모음 생성
- *
+ * @summary 목록 추가를 위한 데이터 모음 생성
+
  * @param {string} content
- * @returns {object} POST를 위한 데이터
+ * @returns {Promise<todoType>} POST를 위한 데이터
+ * @description 
+ * ### 사용법
+ * add **one** string
+ * ```js
+ * 
+ * makeNewTodo('강의듣기')
+ * // {id : 1, content : '강의듣기', completed : false}
+ * 
+ * 
+ * ```
  */
 async function makeNewTodo(content) {
   const response = await axios(INDEX_URL);
   const index = response.data['index'];
   const updateIndex = await axios.put(INDEX_URL, { index: index + 1 });
   return {
-    id: `${index}`,
+    id: index,
     content,
     completed: false,
   };
 }
 /**
  * @description object의 데이터 매핑 => string
- * @param {object} todo
+ * @param {todoType} todo
  * @returns {string} 텍스트 형태의 HTML 코드
  */
 function createTodoHTML(todo) {
@@ -146,19 +183,18 @@ function createTodoHTML(todo) {
   </div>
   `;
 }
-/* Update */
 
 /**
  * @description (async) todo 상태 변경
- * @param {object} todo
- * @returns {object | null} 변경된 todo || null
+ * @param {todoType} todo
+ * @returns {Promise<todoType> | null} 변경된 todo || null
  */
 async function statusToggle(todo) {
   try {
     const response = await axios.put(`${TODOS_URL}/${todo.id}`, todo);
     return response.data;
   } catch (error) {
-    document.querySelector('#input-error').textContent =
+    document.querySelector('input#input-error').textContent =
       '수정 중 오류가 발생했습니다. 다시 시도해주세요.';
     console.log(error);
     return null;
@@ -166,9 +202,8 @@ async function statusToggle(todo) {
 }
 /**
  * @description (UI) todo 상태 변경, 해당 목록에 최소선 토글
- * @param {EventTarget} target 
+ * @param {EventTarget} target
  */
-// completed 상태 바꾸기(UI)
 function statusToggleDisplay(target) {
   const todoDiv = target.closest('div.todo');
   const content = todoDiv.querySelector('div.content');
@@ -176,8 +211,8 @@ function statusToggleDisplay(target) {
 }
 /**
  * @description (async) 목록 삭제
- * @param {object} todo 
- * @returns {object | null} 삭제된 데이터 || null
+ * @param {todoType} todo
+ * @returns {Promise<todoType> | null} 삭제된 데이터 || null
  */
 async function removeTodo(todo) {
   try {
@@ -192,7 +227,7 @@ async function removeTodo(todo) {
 }
 /**
  * @description 이벤트에 해당하는 목록을 화면에서 삭제
- * @param {EventTarget} target 
+ * @param {EventTarget} target
  */
 function removeTodoDisplay(target) {
   const todoLi = target.closest('li');
@@ -205,9 +240,9 @@ function removeTodoDisplay(target) {
 /**
  * @description 목록 추가시 입력값에 대한 유효성 검사
  * 1. 입력값 없음
- * 2. 최소 글자수 
- * @param {string} v 
- * @returns {object} result: boolean, message: string
+ * 2. 최소 글자수
+ * @param {string} v input.value 사용자 입력값
+ * @returns {validateValueType} result: boolean, message: string
  */
 function validateValue(v) {
   const minimumCharacters = 2;
@@ -243,7 +278,7 @@ async function initTodos() {
 /**
  * @description 클라이언트의 삭제여부 확인
  * @param {boolean} flag 목록 완료 여부
- * @returns {boolean} 
+ * @returns {boolean}
  */
 function isDelete(flag) {
   const message = flag
@@ -254,7 +289,7 @@ function isDelete(flag) {
 
 /**
  * @description Enter key 확인: input 태그의 입력키
- * @param {Event} e 
+ * @param {Event} e
  * @returns {boolean}
  */
 function isEnterKey(e) {

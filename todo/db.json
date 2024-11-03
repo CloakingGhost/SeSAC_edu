@@ -1,7 +1,7 @@
 {
   "todos": [
     {
-      "id": "110",
+      "id": 110,
       "content": "asdasd",
       "completed": true
     }
