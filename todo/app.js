@@ -122,7 +122,7 @@ contentInput.addEventListener('keydown', (e) => {
 //#region 함수 CRUD
 
 /**
- * @summary Todo 목록 추가용 li 태그 생성
+ * Todo 목록 추가용 li 태그 생성
  * @param {todoType} todo
  * @returns {HTMLLIElement} return HTMLLIElement
  */
@@ -137,13 +137,11 @@ function createLiTag(todo) {
 }
 
 /**
- * @summary 목록 추가를 위한 데이터 모음 생성
-
+ * 목록 추가를 위한 데이터 모음 생성
  * @param {string} content
  * @returns {Promise<todoType>} POST를 위한 데이터
- * @description 
+ * 
  * ### 사용법
- * add **one** string
  * ```js
  * 
  * makeNewTodo('강의듣기')
@@ -163,7 +161,7 @@ async function makeNewTodo(content) {
   };
 }
 /**
- * @description object의 데이터 매핑 => string
+ * object의 데이터 매핑 => string
  * @param {todoType} todo
  * @returns {string} 텍스트 형태의 HTML 코드
  */
@@ -185,24 +183,24 @@ function createTodoHTML(todo) {
 }
 
 /**
- * @description (async) todo 상태 변경
+ * (async) todo 상태 변경
  * @param {todoType} todo
  * @returns {Promise<todoType> | null} 변경된 todo || null
  */
 async function statusToggle(todo) {
-  console.log(todo)
   try {
     const response = await axios.put(`${TODOS_URL}/${todo.id}`, todo);
     return response.data;
   } catch (error) {
     document.querySelector('span#input-error').textContent =
       '수정 중 오류가 발생했습니다. 다시 시도해주세요.';
-    console.log(error);
+    console.error(error);
     return null;
   }
 }
+
 /**
- * @description (UI) todo 상태 변경, 해당 목록에 최소선 토글
+ * (UI) todo 상태 변경, 해당 목록에 최소선 토글
  * @param {EventTarget} target
  */
 function statusToggleDisplay(target) {
@@ -210,8 +208,9 @@ function statusToggleDisplay(target) {
   const content = todoDiv.querySelector('div.content');
   content.classList.toggle('del');
 }
+
 /**
- * @description (async) 목록 삭제
+ * (async) 목록 삭제
  * @param {todoType} todo
  * @returns {Promise<todoType> | null} 삭제된 데이터 || null
  */
@@ -227,7 +226,7 @@ async function removeTodo(todo) {
   }
 }
 /**
- * @description 이벤트에 해당하는 목록을 화면에서 삭제
+ * 이벤트에 해당하는 목록을 화면에서 삭제
  * @param {EventTarget} target
  */
 function removeTodoDisplay(target) {
@@ -239,10 +238,10 @@ function removeTodoDisplay(target) {
 //#region 함수 유효성 검사
 
 /**
- * @description 목록 추가시 입력값에 대한 유효성 검사
+ * 목록 추가시 입력값에 대한 유효성 검사
  * 1. 입력값 없음
  * 2. 최소 글자수
- * @param {string} v input.value 사용자 입력값
+ * @param {string} v input.value: 사용자 입력값
  * @returns {validateValueType} result: boolean, message: string
  */
 function validateValue(v) {
@@ -265,7 +264,7 @@ function validateValue(v) {
 //#region 유틸(그 외 기능)
 
 /**
- * @description (async) 화면 랜더링 후 실행
+ * (async) 목록 생성
  */
 async function initTodos() {
   const response = await axios.get(TODOS_URL);
@@ -277,7 +276,7 @@ async function initTodos() {
 }
 
 /**
- * @description 클라이언트의 삭제여부 확인
+ * 클라이언트의 삭제여부 확인
  * @param {boolean} flag 목록 완료 여부
  * @returns {boolean}
  */
@@ -289,7 +288,7 @@ function isDelete(flag) {
 }
 
 /**
- * @description Enter key 확인: input 태그의 입력키
+ * Enter key 확인: input 태그의 입력키
  * @param {Event} e
  * @returns {boolean}
  */
