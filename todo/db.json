@@ -1,12 +1,6 @@
 {
-  "todos": [
-    {
-      "id": "94",
-      "content": "강의 듣기",
-      "completed": "true"
-    }
-  ],
+  "todos": [],
   "index": {
-    "index": 95
+    "index": 107
   }
 }

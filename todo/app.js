@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', initTodos);
 const todoList = document.querySelector('#todo-list');
 const addTodoBtn = document.querySelector('#add-todo');
 const content = document.querySelector('#todo-input');
+
+
+
 let isSubmitting = false; // 중복 전송 방지
 /* Create */
 addTodoBtn.addEventListener('click', async (e) => {
@@ -38,28 +41,37 @@ addTodoBtn.addEventListener('click', async (e) => {
   isSubmitting = false; // 완료 후 플래그 초기화
 });
 content.addEventListener('keydown', (e) => {
-  if (
-    (e.keyCode === 13 || e.key === 'Enter' || e.code === 'Enter') &&
-    !isSubmitting
-  ) {
+  if (isEnterKey(e) && !isSubmitting) {
     e.preventDefault();
     addTodoBtn.click();
   }
 });
-
+function isEnterKey(e) {
+  return e.keyCode === 13 || e.key === 'Enter' || e.code === 'Enter';
+}
 // todo li 생성
 function createLiTag(todo) {
   const li = document.createElement('li');
-  li.insertAdjacentHTML('beforeend', getTodo(todo));
+  li.insertAdjacentHTML('beforeend', createTodoHTML(todo));
   // li 안에 값(요소들) 넣고 버튼 찾아서 이벤트 추가
   const completedBtn = li.querySelector('.btn-info');
   const deleteBtn = li.querySelector('.btn-danger');
-  completedBtn.addEventListener('click', statusToggle);
-  deleteBtn.addEventListener('click', removeTodo);
-  const completed = li.querySelector("input[name='completed']");
+  // 클로저: todo가 남아있음, e를 통해 데이터를 찾는 작업 안해도 됨
+  completedBtn.addEventListener('click', async (e) => {
+    todo = await statusToggle(todo);
+    statusToggleDisplay(e);
+  });
+  // 클로저: todo가 남아있음
+  deleteBtn.addEventListener('click', async (e) => {
+    const result = await removeTodo(todo);
+    
+    if (result) {
+      removeTodoDisplay(e);
+    }
+  });
   // 페이지 로딩 때 취소선
-  if (JSON.parse(completed.value)) {
-    li.querySelector('.content').classList.add('del');
+  if (todo.completed) {
+    li.querySelector('div.content').classList.add('del');
   }
   return li;
 }
@@ -74,7 +86,25 @@ async function createTodo(content) {
     completed: false,
   };
 }
-
+function createTodoHTML(todo) {
+  /* input "${todo.completed}" 삭제 해야함 */
+  return `
+  <div class="todo" data-completed="${todo.completed}">
+    <input type="hidden" name="id" value="${todo.id}">
+    
+    <input type="hidden" name="completed" value="${todo.completed}">
+    <div class="content">
+      <b>${todo.content}</b>
+    </div>
+    <div class="me-5">
+      <button class="btn btn-info">완료</button>
+    </div>
+    <div>
+      <button class="btn btn-danger">삭제</button>
+    </div>
+  </div>
+  `;
+}
 /* Update */
 // 완료 버튼 누르면
 // 해당 content에 class 추가  .del {text-decoration: line-through}
@@ -82,31 +112,22 @@ async function createTodo(content) {
 // fetch로 DB 바꿔
 
 // completed 바꾸기
-async function statusToggle(e) {
-  const todo = e.target.closest('div.todo');
-  const completed = todo.querySelector('input[name=completed]');
-  const content = todo.querySelector('.content');
-  content.classList.toggle('del');
-  completed.value = !JSON.parse(completed.value);
-
+async function statusToggle(todo) {
   try {
-    const obj = getInfo(todo);
-    const response = await axios.put(`${URL}/${obj.id}`, obj);
+    todo.completed = !todo.completed;
+    const response = await axios.put(`${URL}/${todo.id}`, todo);
+    return response.data;
   } catch (error) {
+    document.querySelector('#input-error').textContent =
+      '오류가 발생했습니다. 다시 시도해주세요.';
     console.log(error);
+    return null;
   }
 }
-
-// completed 바꾸기용 Object 만들기
-function getInfo(todo) {
-  const id = todo.querySelector("input[name='id']");
-  const completed = todo.querySelector("input[name='completed']");
-  const content = todo.querySelector('.content');
-  return {
-    id: id.value,
-    content: content.textContent.trim(),
-    completed: completed.value,
-  };
+function statusToggleDisplay(e) {
+  const todo = e.target.closest('div.todo');
+  const content = todo.querySelector('div.content');
+  content.classList.toggle('del');
 }
 
 /* Delete */
@@ -121,19 +142,28 @@ function getInfo(todo) {
 // 해당 값 DB에서 제거
 // 제거 후 화면에서도 제거
 // 아님 일부만 지울까? <- 이게 UX 더 좋긴 함
-async function removeTodo(e) {
-  const todo = e.target.closest('div.todo');
-  const id = todo.querySelector("input[name='id']");
-  if (checkDel(e)) {
-    const response = await axios.delete(`${URL}/${id.value}`);
-    // 내용 지우기
-    const li = todo.closest('li');
-    while (li.firstChild) {
-      li.removeChild(li.firstChild);
+async function removeTodo(todo) {
+  try {
+    if (checkDel(todo.completed)) {
+      const response = await axios.delete(`${URL}/${todo.id}`);
+      return true;
+    } else {
+      return false
     }
+  } catch (error) {
+    document.querySelector('#input-error').textContent =
+      '오류가 발생했습니다. 다시 시도해주세요.';
+    console.error(error);
+    return false;
   }
+  // DB에서 내용 지우기
+  // 화면에서 내용 지우기
+  // todo.closest('li').remove();
 }
-
+function removeTodoDisplay(e) {
+  const todoLi = e.target.closest('li');
+  todoLi.remove();
+}
 /* Init */
 async function initTodos() {
   const response = await axios.get(URL);
@@ -144,25 +174,6 @@ async function initTodos() {
   });
 }
 
-/* Read */
-function getTodo(todo) {
-  return `
-  <div class="todo">
-    <input type="hidden" name="id" value="${todo.id}">
-    <input type="hidden" name="completed" value="${todo.completed}">
-    <div class="content">
-      <b>${todo.content}</b>
-    </div>
-    <div class="me-5">
-      <button class="btn btn-info">완료</button>
-    </div>
-    <div>
-      <button class="btn btn-danger">삭제</button>
-    </div>
-  </div>
-  `;
-}
-
 /* Validation */
 
 // 유효성 검사 뭐가 있을까
@@ -170,12 +181,8 @@ function getTodo(todo) {
 // 최소 2글자 이상, trim 사용 => 2글자 이상 입력해주세요
 
 /* Delete 전용 */
-function checkDel(e) {
-  const completed = e.target
-    .closest('div.todo')
-    .querySelector('input[name=completed]');
-  const flag = JSON.parse(completed.value);
-  let message = flag
+function checkDel(flag) {
+  const message = flag
     ? '축하드립니다🎉 목표를 달성하셨습니다. 삭제하시겠습니까?'
     : '아직 목표를 달성하지 못했습니다. 삭제하시겠습니까?';
   return confirm(message);
@@ -183,7 +190,7 @@ function checkDel(e) {
 
 /* Create 전용 */
 function validateValue(v) {
-  const minimumLetter = 2
+  const minimumCharacters = 2;
   v = v.trim();
   let result = true;
   let message = 'Pass validation';
@@ -193,7 +200,7 @@ function validateValue(v) {
     message = '입력값이 없습니다.';
   } else if (v.length < 2) {
     result = false;
-    message = `${minimumLetter}글자 이상 입력해주세요.`;
+    message = `${minimumCharacters}글자 이상 입력해주세요.`;
   }
   return { result: result, message: message };
 }
