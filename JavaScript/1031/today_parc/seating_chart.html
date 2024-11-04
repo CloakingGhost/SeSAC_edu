@@ -127,14 +127,17 @@
             }
           }
         });
-        console.log(temp);
-        console.log(names);
-        
+        // console.log(temp);
+        // console.log(names);
+
         flag = !flag;
       }
 
       function shuffle(array) {
-        array.sort(() => Math.random() - 0.5);
+        array.sort(() => {
+          console.log(Math.random() - 0.5);
+          return Math.random() - 0.5;
+        });
       }
 
       boxs.forEach((box) => {
@@ -176,7 +179,6 @@
       // 인원 추가, 원 배열에 추가 names 와 temp 중 빈 배열이 아닌 곳에 넣기
 
       // 근본적으로 전체 자리를 기준으로 랜덤은 못돌리나..? 중간중간 빈값넣어서 말이지
-    
     </script>
   </body>
 </html>

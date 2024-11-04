@@ -1,3 +1,4 @@
+// CommonJS
 const obj = {
     name: '홍길동',
     greet() {
