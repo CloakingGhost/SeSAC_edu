@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+}
+.container{
+  margin: 1rem;
+}
+.container div {
+  border: .1px solid black;
+  padding: 1rem;
+}
+.main {
+  display: flex;
+}
+.main-content {
+  flex-grow: 2;
+}
+.sidebar {
+  flex-grow: 1;
+}
+.m-1rem-y {
+  margin: 1rem 0;
+}
+.m-1rem-e {
+  margin-right: 1rem;
+}
