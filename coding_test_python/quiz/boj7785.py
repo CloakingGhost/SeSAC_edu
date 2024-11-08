@@ -1,3 +1,5 @@
+#region 회사에 있는 사람
+
 n = int(input())
 my_set = set()
 for _ in range(n):
@@ -11,3 +13,5 @@ answer = list(my_set)
 answer.sort(reverse=True)
 for n in answer:
   print(n)
+
+#endregion
