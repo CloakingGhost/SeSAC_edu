@@ -3,6 +3,9 @@ package-lock.json
 .prettierrc
 server.js
 db.json
+obsidian/
+.obsidian/
+*.png
 
 # Logs
 logs
