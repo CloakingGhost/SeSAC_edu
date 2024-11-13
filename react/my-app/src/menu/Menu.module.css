@@ -1,0 +1,13 @@
+.menuDetail{
+  display: flex;
+  justify-content: space-between;
+}
+.textCenter{
+  text-align: center;
+}
+.colorBrown{
+  color: chocolate;
+}
+.textItalic{
+  font-style:  italic;
+}

@@ -1,0 +1,15 @@
+{
+  "categories": [
+    {"id" : 1, "category" : "coffee" },
+    {"id" : 2, "category" : "ade"}
+  ],
+  "drinks": [
+    { "id": 1, "name": "아메리카노", "price": "5.0/5.5", "category": "coffee" },
+    { "id": 2, "name": "카페라떼", "price": "6.0/6.5", "category": "coffee" },
+    { "id": 3, "name": "바닐라라떼", "price": "6.0/6.5", "category": "coffee" },
+    { "id": 4, "name": "카라멜마끼아또", "price": "6.5/7.0", "category": "coffee" },
+    { "id": 5, "name": "레몬에이드", "price": "6.0", "category": "ade" },
+    { "id": 6, "name": "자몽에이드", "price": "6.0", "category": "ade" },
+    { "id": 7, "name": "유자에이드", "price": "6.0", "category": "ade" }
+  ]
+}
