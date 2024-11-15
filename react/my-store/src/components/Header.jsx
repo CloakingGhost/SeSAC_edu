@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Login from "./Login";
 import { useSelector } from "react-redux";
 
-
 export default function Header() {
   const { isAuthenticated } = useSelector(state => state.auth)
   return (
