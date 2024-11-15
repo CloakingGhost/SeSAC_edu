@@ -27,7 +27,7 @@ export default function FictionNav() {
   return (
     <nav>
       <ul>
-        <li>전체</li>
+        <li onClick={() => navigate('/fiction')}>전체</li>
         {navItems.map(({ gerneId, gerneKor }) => {
           return (
             <li onClick={() => navigate(`/fiction/${gerneId}`)}>

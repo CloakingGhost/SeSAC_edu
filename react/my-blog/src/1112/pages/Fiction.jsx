@@ -8,7 +8,6 @@ export default function Fiction() {
   return (
     <div>
       <FictionNav></FictionNav>
-      {getItem()}
       <Outlet></Outlet>
     </div>
   )

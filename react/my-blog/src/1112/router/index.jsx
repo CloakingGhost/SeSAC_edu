@@ -36,11 +36,12 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <div>요일별 모든 웹툰 : 비동기 통신으로 가져옴</div>
+            element: <div>다양한 장르의 소설 : 비동기 통신으로 가져옴</div>
           },
           {
             path: ":genre",
-            element: <FictionDeteil />
+            element: <FictionDeteil />,
+            // loader
           }
         ],
       },
