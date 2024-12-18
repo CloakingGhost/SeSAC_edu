@@ -5,6 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { replace } from "lodash";
 
+import postApi from "../api/postsApi";
+
 export default function PostDetail() {
   const navigate = useNavigate()
 
@@ -33,8 +35,9 @@ export default function PostDetail() {
     
     async function fetchGetpost(postId) {
       try {
-        const response = await axios.get(`http://localhost:3000/posts/${postId}`)
-        const post = response.data
+        // const response = await axios.get(`http://localhost:3000/posts/${postId}`)
+        // const post = response.data
+        const post = await postApi.getPostById(postId)
         
         setPost(post)
         

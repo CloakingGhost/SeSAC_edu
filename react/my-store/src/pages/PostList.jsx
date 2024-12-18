@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 // import { useSelector } from "react-redux"; // axios로 바꿀거임
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios'
+import postApi from "../api/postsApi";
 
 export default function PostList() {
   const navigate = useNavigate();
@@ -42,13 +43,16 @@ export default function PostList() {
   useEffect(() => {
     async function fetchGetPosts() {
       try {
-        const response = await axios.get('http://localhost:3000/posts')
-        const posts = response.data
-        setLoding(false)
+        // const response = await axios.get('http://localhost:3000/posts')
+        // const posts = response.data
+
+        const posts = await postApi.getPosts()
         setPosts(posts)
       } catch (er) {
         setError(er)
         console.log(error.name)
+      } finally {
+        setLoding(false)
       }
     }
     fetchGetPosts()

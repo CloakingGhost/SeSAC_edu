@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addPost } from '../store/slices/postsSlice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import postApi from '../api/postsApi';
 
 export default function PostCreate() {
 
@@ -39,14 +40,15 @@ export default function PostCreate() {
             console.log("data : ")
             console.log(data)
 
-            const response = await axios.post('http://localhost:3000/posts', data)
-            const result = response.data
-            console.log(result)
+            // const response = await axios.post('http://localhost:3000/posts', data)
+            // const result = response.data
+            const result = await postApi.createPost(data)
+            // console.log(result)
+            navigate(`/posts/${result.id}`);
 
           }
-          // navigate(`/posts/${id}`);
-
           fetchCreatePost(formData)
+
         }}
 
         onChange={(e) => {
