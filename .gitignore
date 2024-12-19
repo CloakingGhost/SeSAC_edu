@@ -1,5 +1,5 @@
 # Created by https://www.toptal.com/developers/gitignore/api/windows,macos,visualstudiocode,node,react,python
-my-movie/.git/
+my-movie/
 ### macOS ###
 # General
 .DS_Store

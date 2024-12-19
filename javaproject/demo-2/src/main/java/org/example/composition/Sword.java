@@ -1,14 +1,14 @@
 package org.example.composition;
 
-public class Gun extends Weapon{
-    public Gun(int power, int durability) {
+public class Sword extends Weapon{
+    public Sword(int power, int durability) {
         super(power, durability);
     }
 
     @Override
     public int specialAttack() {
         int damage = power * 2;
-        System.out.println("Gun Special Damage " + damage);
+        System.out.println("Sword Special Damage " + damage);
         decreaseDurability();
         return damage;
 
@@ -17,7 +17,7 @@ public class Gun extends Weapon{
     @Override
     public int attack() {
         int damage = power;
-        System.out.println("Gun Damage " + damage);
+        System.out.println("Sword Damage " + damage);
         decreaseDurability();
         return damage;
     }

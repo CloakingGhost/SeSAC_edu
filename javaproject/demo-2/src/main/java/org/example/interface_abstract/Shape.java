@@ -1,4 +1,6 @@
 package org.example.interface_abstract;
 
-public class Shape {
+public abstract class Shape {
+    public abstract int calculateArea();
+
 }

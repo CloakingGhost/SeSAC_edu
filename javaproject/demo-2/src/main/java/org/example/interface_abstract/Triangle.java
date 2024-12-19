@@ -1,7 +1,9 @@
 package org.example.interface_abstract;
 
-public class Rectangle extends Shape{
-    public Rectangle() {
+public class Triangle extends Shape{
+    private int width;
+    private int height;
+    public Triangle() {
         width = 10;
         height = 20;
     }
