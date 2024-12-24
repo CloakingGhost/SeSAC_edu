@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) {
+
         List<Integer> list = new ArrayList<>();
         list.add(30);
         list.add(20);
