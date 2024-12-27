@@ -6,6 +6,13 @@ public class Product<T extends ProductType> {
     private int remain;
     private T type;
 
+    /**
+     * Product 생성자
+     *
+     * @param name 제품 이름
+     * @param price 제품 가격
+     * @param type 제품의 유형 (Enum: ProductType)
+     * */
     public Product(String name, int price, T type) {
         this.name = name;
         this.price = price;
@@ -35,13 +42,22 @@ public class Product<T extends ProductType> {
         return true;
     }
 
+    /** 재고량 1 감소 */
     public void decreaseRemain() {
         --remain;
         if (remain < 0) remain = 0;
     }
 
+    /** 재고량 1 증가 */
     public void increaseRemain() {
         ++remain;
+    }
+
+    /** 재고량 amount 증가
+     * @param amount 양(량)
+     * */
+    public void increaseRemain(int amount) {
+        remain += amount;
     }
 
     public T getType() {
