@@ -2,9 +2,11 @@ package com.example.demo_3.mvc.service;
 
 import com.example.demo_3.domain.User;
 import com.example.demo_3.dto.requset.UserCreateRequestDto;
+import com.example.demo_3.dto.requset.UserUpdateRequestDto;
 import com.example.demo_3.dto.response.UserListResponseDto;
 import com.example.demo_3.dto.response.UserResponseDto;
 import com.example.demo_3.mvc.repository.UserRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,12 +32,23 @@ public class UserService {
         return users.stream().map(UserListResponseDto::from)
                 .toList();
 
-
     }
 
     public UserResponseDto readUser(Long id) {
         User user = userRepository.findById(id).orElseThrow();
 
         return UserResponseDto.from(user);
+    }
+
+    public UserResponseDto updateUser(Long id, UserUpdateRequestDto requestDto) {
+        User user = userRepository.findById(id).orElseThrow();
+        user.update(requestDto);
+        return UserResponseDto.from(user);
+    }
+
+    public void remove(Long id){
+        User entity = userRepository.findById(id).orElseThrow();
+
+        userRepository.delete(entity);
     }
 }

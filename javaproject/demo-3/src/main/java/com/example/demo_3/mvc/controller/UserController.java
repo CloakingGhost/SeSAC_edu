@@ -1,6 +1,7 @@
 package com.example.demo_3.mvc.controller;
 
 import com.example.demo_3.dto.requset.UserCreateRequestDto;
+import com.example.demo_3.dto.requset.UserUpdateRequestDto;
 import com.example.demo_3.dto.response.UserListResponseDto;
 import com.example.demo_3.dto.response.UserResponseDto;
 import com.example.demo_3.mvc.service.UserService;
@@ -30,5 +31,11 @@ public class UserController {
     @GetMapping("/{id}")
     public UserResponseDto readUser(@PathVariable Long id){
         return userService.readUser(id);
+    }
+
+    @PutMapping("/{id}")
+    public UserResponseDto updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateRequestDto requestDto) {
+
+        return userService.updateUser(id, requestDto);
     }
 }

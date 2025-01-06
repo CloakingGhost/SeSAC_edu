@@ -20,3 +20,13 @@ Content-Type: application/json
 ### Get One User
 GET http://localhost:8080/v1/users/3
 Content-Type: application/json
+
+### update One user
+PUT http://localhost:8080/v1/users/3
+Content-Type: application/json
+
+{
+  "email": "120@123.com",
+  "nickname": "ttttt5555",
+  "age": 22
+}

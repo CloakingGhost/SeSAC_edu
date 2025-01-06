@@ -1,6 +1,8 @@
 package com.example.demo_3.domain;
 
+import com.example.demo_3.dto.requset.UserUpdateRequestDto;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -24,12 +26,11 @@ public class User extends BaseTimeEntity {
     private String email;
 
     @Setter
-    @Column(nullable = false, unique = true, length = 10) // DB 제약조건
+    @Column(nullable = false, length = 10) // DB 제약조건
     private String nickname;
 
     @Setter
-    @ColumnDefault("-1") // DB 기본값
-    private Integer age = -1; // 코드 기본값
+    private Integer age; // 코드 기본값
 
     @Setter
     @ColumnDefault("1") // DB 기본값 (MySQL에서는 true를 1로 표현)
@@ -40,7 +41,13 @@ public class User extends BaseTimeEntity {
         this.username = username;
         this.email = email;
         this.nickname = nickname;
-        this.age = age != null ? age : -1; // 기본값 처리
+        this.age = age;
         this.isActive = isActive != null ? isActive : true; // 기본값 처리
+    }
+
+    public void update(UserUpdateRequestDto requestDto) {
+        this.email = requestDto.getEmail();
+        this.nickname = requestDto.getNickname();
+        this.age = requestDto.getAge();
     }
 }

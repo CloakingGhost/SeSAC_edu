@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 public class UserListResponseDto {
     private Long id;
     private String username;
+    private boolean isActive;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -18,6 +19,7 @@ public class UserListResponseDto {
         return UserListResponseDto.builder()
                 .id(entity.getId())
                 .username(entity.getUsername())
+                .isActive(entity.isActive())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .build();
