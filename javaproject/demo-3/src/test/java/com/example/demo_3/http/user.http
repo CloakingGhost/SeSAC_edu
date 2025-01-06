@@ -7,8 +7,12 @@ POST http://localhost:8080/v1/users
 Content-Type: application/json
 
 {
-  "username": "tttt3",
-  "email": "123@123.ff.com",
-  "nickname": "ttttt5",
+  "username": "tttt0",
+  "email": "120@123.com",
+  "nickname": "ttttt0",
   "age": 26
 }
+
+### Get All User
+GET http://localhost:8080/v1/users
+Content-Type: application/json
