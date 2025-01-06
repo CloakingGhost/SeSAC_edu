@@ -7,6 +7,7 @@ import com.example.demo_3.dto.response.UserResponseDto;
 import com.example.demo_3.mvc.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,7 +36,12 @@ public class UserController {
 
     @PutMapping("/{id}")
     public UserResponseDto updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateRequestDto requestDto) {
-
         return userService.updateUser(id, requestDto);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeUser(@PathVariable Long id){
+        userService.removeUser(id);
     }
 }

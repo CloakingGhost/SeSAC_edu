@@ -30,3 +30,7 @@ Content-Type: application/json
   "nickname": "ttttt5555",
   "age": 22
 }
+
+### Delete One User
+DELETE http://localhost:8080/v1/users/3
+Content-Type: application/json
