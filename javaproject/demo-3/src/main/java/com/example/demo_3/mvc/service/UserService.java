@@ -32,4 +32,10 @@ public class UserService {
 
 
     }
+
+    public UserResponseDto readUser(Long id) {
+        User user = userRepository.findById(id).orElseThrow();
+
+        return UserResponseDto.from(user);
+    }
 }

@@ -16,3 +16,7 @@ Content-Type: application/json
 ### Get All User
 GET http://localhost:8080/v1/users
 Content-Type: application/json
+
+### Get One User
+GET http://localhost:8080/v1/users/3
+Content-Type: application/json
