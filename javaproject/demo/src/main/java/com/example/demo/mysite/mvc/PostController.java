@@ -1,6 +1,7 @@
 package com.example.demo.mysite.mvc;
 
 import com.example.demo.mysite.Post;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,12 @@ import java.util.List;
 @RequestMapping("/mvc/posts")
 public class PostController {
 
-    PostService postService = new PostService();
+//    PostService postService = new PostService();
+    private final PostService postService;
+
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

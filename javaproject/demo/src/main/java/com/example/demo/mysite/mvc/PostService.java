@@ -1,6 +1,7 @@
 package com.example.demo.mysite.mvc;
 
 import com.example.demo.mysite.Post;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,8 +10,14 @@ import java.util.Objects;
 @Service
 public class PostService {
 
-    private PostRepository postRepository = new PostRepository();
+    //    private PostRepository postRepository = new PostRepository();
+    private PostRepository postRepository;
 
+
+    @Autowired
+    public PostService(PostRepository postRepository) {
+        this.postRepository = postRepository;
+    }
 
     // 컨트롤러에게서 데이터 입력 받는다
     public Post createPost(Post newPost) {
@@ -31,11 +38,11 @@ public class PostService {
 
     }
 
-    public List<Post> readPosts(){
+    public List<Post> readPosts() {
         return postRepository.findAll();
     }
 
-    public Post readPostById(Long id){
+    public Post readPostById(Long id) {
         Post post = postRepository.findById(id);
 //        if (Objects.isNull(post)) {
 //            throw new IllegalArgumentException("없는 id입니다.");
@@ -54,12 +61,13 @@ public class PostService {
         return postRepository.modify(id, updatePost);
     }
 
-    public void checkPostIsNull(Post post){
-        if(Objects.isNull(post)){
+    public void checkPostIsNull(Post post) {
+        if (Objects.isNull(post)) {
             throw new IllegalArgumentException("없는 id입니다");
         }
     }
-    public void validatePostData(Post post ){
+
+    public void validatePostData(Post post) {
         String title = post.getTitle();
         String content = post.getContent();
 
@@ -72,7 +80,7 @@ public class PostService {
         }
     }
 
-    public boolean deletePost(Long id){
+    public boolean deletePost(Long id) {
         Post post = postRepository.findById(id);
         checkPostIsNull(post);
         return postRepository.delete(post);

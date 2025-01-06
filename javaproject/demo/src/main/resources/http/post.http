@@ -1,0 +1,105 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=IntelliJ IDEA
+
+### Post 생성
+POST http://localhost:8080/jpa/v2/posts
+Content-Type: application/json
+
+{
+  "title": "new title 123123",
+  "content": "new content 456456"
+}
+
+### GET 단건
+@id = 2
+GET http://localhost:8080/jpa/v2/posts/{{id}}
+Content-Type: application/json
+
+### GET 다건
+GET http://localhost:8080/jpa/v2/posts
+Content-Type: application/json
+
+### Put 수정
+PUT http://localhost:8080/jpa/v2/posts/{{id}}
+Content-Type: application/json
+
+{
+  "title": "modify title 123123",
+  "content": "modify content 456456"
+}
+#################################### v3
+@v3Id = 1
+### Post 생성
+POST http://localhost:8080/jpa/v3/posts
+Content-Type: application/json
+
+{
+  "title": "new title v3",
+  "content": "new content v3"
+}
+
+### GET 다건
+GET http://localhost:8080/jpa/v3/posts
+Content-Type: application/json
+
+### GET 단건
+GET http://localhost:8080/jpa/v3/posts/{{v3Id}}
+Content-Type: application/json
+
+### DELETE 단건
+DELETE http://localhost:8080/jpa/v3/posts/{{v3Id}}
+Content-Type: application/json
+
+### PUT 단건
+PUT http://localhost:8080/jpa/v3/posts/{{v3Id}}
+Content-Type: application/json
+
+{
+  "title": "modify title v3",
+  "content": "modify content v3"
+}
+
+##################### V4
+POST http://localhost:8080/jpa/v4/posts
+Content-Type: application/json
+
+{
+  "title": "new title v4",
+  "content": "new content v4",
+  "author" : "tester"
+
+}
+
+### GET 다건
+GET http://localhost:8080/jpa/v4/posts
+Content-Type: application/json
+
+### GET 단건
+@v4Id = 300
+POST http://localhost:8080/jpa/v4/posts/{{v4Id}}
+Content-Type: application/json
+
+### DELETE 단건
+DELETE http://localhost:8080/jpa/v4/posts/{{v4Id}}
+Content-Type: application/json
+
+### PUT 단건
+PUT http://localhost:8080/jpa/v4/posts/{{v4Id}}
+Content-Type: application/json
+
+{
+  "title": "modify title v4",
+  "content": "modify content v4"
+}
+
+##################### V5
+POST http://localhost:8080/jpa/v5/posts
+Content-Type: application/json
+
+{
+  "title": "new title v4",
+  "content": "new content v4",
+  "author" : "tester"
+
+}

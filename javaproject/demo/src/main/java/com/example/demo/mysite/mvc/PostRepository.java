@@ -12,6 +12,12 @@ public class PostRepository {
     private final List<Post> posts = new ArrayList<>();
     private Long id = 0L;
 
+    {
+        for (int i = 0; i < 3; i++) {
+            posts.add(new Post(++id, "제목 " + id, "내용 " + id));
+        }
+
+    }
     public Post save(Post newPost){
 
         String title = newPost.getTitle();
