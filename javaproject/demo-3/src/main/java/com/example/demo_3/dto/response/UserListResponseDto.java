@@ -19,7 +19,7 @@ public class UserListResponseDto {
         return UserListResponseDto.builder()
                 .id(entity.getId())
                 .username(entity.getUsername())
-                .isActive(entity.isActive())
+                .isActive(entity.getIsActive())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .build();

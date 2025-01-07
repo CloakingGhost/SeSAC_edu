@@ -28,7 +28,7 @@ public class UserResponseDto {
                 .age(entity.getAge())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
-                .isActive(entity.isActive())
+                .isActive(entity.getIsActive())
                 .build();
     }
 }

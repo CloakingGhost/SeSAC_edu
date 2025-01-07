@@ -36,7 +36,6 @@ public class UserCreateRequestDto {
                 .email(email)
                 .nickname(nickname)
                 .age(age)
-                .isActive(true)
                 .build();
     }
 }

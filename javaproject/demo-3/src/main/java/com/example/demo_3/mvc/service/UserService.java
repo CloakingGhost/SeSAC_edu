@@ -41,15 +41,17 @@ public class UserService {
         return UserResponseDto.from(user);
     }
 
+    @Transactional
     public UserResponseDto updateUser(Long id, UserUpdateRequestDto requestDto) {
         User user = userRepository.findById(id).orElseThrow();
         user.update(requestDto);
         return UserResponseDto.from(user);
     }
 
+    @Transactional
     public void removeUser(Long id){
         User entity = userRepository.findById(id).orElseThrow();
-        entity.setActive(false);
+        entity.setIsActive(false);
 
     }
 

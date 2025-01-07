@@ -7,10 +7,10 @@ POST http://localhost:8080/v1/users
 Content-Type: application/json
 
 {
-  "username": "tttt0",
-  "email": "120@123.com",
-  "nickname": "ttttt0",
-  "age": 26
+  "username": "ttt4",
+  "email": "4@123.com",
+  "nickname": "ttt4",
+  "age": 28
 }
 
 ### Get All User
@@ -33,4 +33,9 @@ Content-Type: application/json
 
 ### Delete One User
 DELETE http://localhost:8080/v1/users/3
+Content-Type: application/json
+
+
+### Get One User
+GET http://localhost:8080/v1/users/search?value=27
 Content-Type: application/json

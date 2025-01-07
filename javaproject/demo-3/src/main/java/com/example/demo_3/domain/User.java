@@ -34,15 +34,15 @@ public class User extends BaseTimeEntity {
 
     @Setter
     @ColumnDefault("1") // DB 기본값 (MySQL에서는 true를 1로 표현)
-    private boolean isActive = true; // 코드 기본값
+    private Boolean isActive; // 코드 기본값
 
     @Builder
-    public User(String username, String email, String nickname, Integer age, Boolean isActive) {
+    public User(String username, String email, String nickname, Integer age) {
         this.username = username;
         this.email = email;
         this.nickname = nickname;
         this.age = age;
-        this.isActive = isActive != null ? isActive : true; // 기본값 처리
+        this.isActive = true; // 기본값 처리
     }
 
     public void update(UserUpdateRequestDto requestDto) {

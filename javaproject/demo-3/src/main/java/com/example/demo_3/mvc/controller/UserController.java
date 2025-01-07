@@ -1,9 +1,11 @@
 package com.example.demo_3.mvc.controller;
 
+import com.example.demo_3.domain.User;
 import com.example.demo_3.dto.requset.UserCreateRequestDto;
 import com.example.demo_3.dto.requset.UserUpdateRequestDto;
 import com.example.demo_3.dto.response.UserListResponseDto;
 import com.example.demo_3.dto.response.UserResponseDto;
+import com.example.demo_3.mvc.repository.UserRepository;
 import com.example.demo_3.mvc.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,8 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
+
 
     @PostMapping
     public UserResponseDto createUser(@Valid @RequestBody UserCreateRequestDto requestDto) {
@@ -46,12 +50,11 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public UserResponseDto search(
-            @RequestParam(required = false) String nickname,
-            @RequestParam(required = false) String age
+    public List<User> search(
+            @RequestParam(required = false) int value
                                   )
     {
-
-        return null;
+        List<User> users = userRepository.findByIsActiveFalseAndAgeGreaterThan(value);
+        return users;
     }
 }
