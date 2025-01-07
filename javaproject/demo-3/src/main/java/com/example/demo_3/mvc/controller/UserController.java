@@ -1,15 +1,15 @@
 package com.example.demo_3.mvc.controller;
 
-import com.example.demo_3.domain.User;
+import com.example.demo_3.dto.ApiResponse;
 import com.example.demo_3.dto.requset.UserCreateRequestDto;
 import com.example.demo_3.dto.requset.UserUpdateRequestDto;
 import com.example.demo_3.dto.response.UserListResponseDto;
 import com.example.demo_3.dto.response.UserResponseDto;
-import com.example.demo_3.mvc.repository.UserRepository;
 import com.example.demo_3.mvc.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,21 +20,24 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final UserRepository userRepository;
 
 
     @PostMapping
-    public UserResponseDto createUser(@Valid @RequestBody UserCreateRequestDto requestDto) {
-        return userService.createUser(requestDto);
+    public ResponseEntity<ApiResponse<UserResponseDto>> createUser(@Valid @RequestBody UserCreateRequestDto requestDto) {
+        ApiResponse<UserResponseDto> body = ApiResponse.ok("Created", "CREATED", userService.createUser(requestDto));
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(body);
     }
 
     @GetMapping
-    public List<UserListResponseDto> readUsers(){
-        return userService.readUsers();
+    public ResponseEntity<ApiResponse<List<UserListResponseDto>>> readUsers() {
+        ApiResponse<List<UserListResponseDto>> body = ApiResponse.ok(userService.readUsers());
+        return ResponseEntity.ok(body);
     }
 
     @GetMapping("/{id}")
-    public UserResponseDto readUser(@PathVariable Long id){
+    public UserResponseDto readUser(@PathVariable Long id) {
         return userService.readUser(id);
     }
 
@@ -45,16 +48,19 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeUser(@PathVariable Long id){
+    public void removeUser(@PathVariable Long id) {
         userService.removeUser(id);
     }
 
     @GetMapping("/search")
-    public List<User> search(
-            @RequestParam(required = false) int value
-                                  )
-    {
-        List<User> users = userRepository.findByIsActiveFalseAndAgeGreaterThan(value);
+    public List<UserResponseDto> search(
+            @RequestParam(required = false) String nickname,
+            @RequestParam(required = false) Integer minAge,
+            @RequestParam(required = false) Integer maxAge,
+            @RequestParam(required = false) Boolean active,
+            @RequestParam(required = false) String email
+    ) {
+        List<UserResponseDto> users = userService.searchUsers(nickname, minAge, maxAge, active, email);
         return users;
     }
 }

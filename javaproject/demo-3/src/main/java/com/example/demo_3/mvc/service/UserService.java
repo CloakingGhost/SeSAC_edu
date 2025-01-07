@@ -5,9 +5,11 @@ import com.example.demo_3.dto.requset.UserCreateRequestDto;
 import com.example.demo_3.dto.requset.UserUpdateRequestDto;
 import com.example.demo_3.dto.response.UserListResponseDto;
 import com.example.demo_3.dto.response.UserResponseDto;
+import com.example.demo_3.dto.search.UserSpecifications;
 import com.example.demo_3.mvc.repository.UserRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,15 +51,32 @@ public class UserService {
     }
 
     @Transactional
-    public void removeUser(Long id){
+    public void removeUser(Long id) {
         User entity = userRepository.findById(id).orElseThrow();
         entity.setIsActive(false);
 
     }
 
-    public UserResponseDto findByNickname(String nickname){
-        User user = userRepository.findByNickname(nickname).orElseThrow();
+    public List<UserResponseDto> searchUsers(String nickname, Integer minAge, Integer maxAge, Boolean active, String email) {
+        Specification<User> spec = Specification.where(null);
 
-        return UserResponseDto.from(user);
+        if (nickname != null) {
+            spec = spec.and(UserSpecifications.hasNickname(nickname));
+        }
+
+        if (minAge != null && maxAge != null) {
+            spec = spec.and(UserSpecifications.hasAge(minAge, maxAge));
+        }
+
+        if (active != null) {
+            spec = spec.and(UserSpecifications.isActiveStatus(active));
+        }
+
+        if (email != null) {
+            spec = spec.and(UserSpecifications.hasEmailContaining(email));
+        }
+
+
+        return userRepository.findAll(spec).stream().map(UserResponseDto::from).toList();
     }
 }

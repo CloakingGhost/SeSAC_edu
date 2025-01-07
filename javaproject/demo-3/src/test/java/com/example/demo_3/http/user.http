@@ -7,10 +7,10 @@ POST http://localhost:8080/v1/users
 Content-Type: application/json
 
 {
-  "username": "ttt4",
-  "email": "4@123.com",
-  "nickname": "ttt4",
-  "age": 28
+  "username": "ttt113",
+  "email": "113@123.com",
+  "nickname": "ttt111",
+  "age": 27
 }
 
 ### Get All User
@@ -37,5 +37,5 @@ Content-Type: application/json
 
 
 ### Get One User
-GET http://localhost:8080/v1/users/search?value=27
+GET http://localhost:8080/v1/users/search?nickname=ttt1&age=28&active=false
 Content-Type: application/json
