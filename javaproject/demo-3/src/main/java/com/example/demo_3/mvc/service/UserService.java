@@ -53,4 +53,9 @@ public class UserService {
 
     }
 
+    public UserResponseDto findByNickname(String nickname){
+        User user = userRepository.findByNickname(nickname).orElseThrow();
+
+        return UserResponseDto.from(user);
+    }
 }

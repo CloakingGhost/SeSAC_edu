@@ -44,4 +44,14 @@ public class UserController {
     public void removeUser(@PathVariable Long id){
         userService.removeUser(id);
     }
+
+    @GetMapping("/search")
+    public UserResponseDto search(
+            @RequestParam(required = false) String nickname,
+            @RequestParam(required = false) String age
+                                  )
+    {
+
+        return null;
+    }
 }
