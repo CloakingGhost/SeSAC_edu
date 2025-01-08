@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -44,6 +45,14 @@ public class PostController {
 
     }
 
+    @GetMapping("/v2/{id}")
+    public ResponseEntity<ApiResponse<PostWithCommentResponseDtoV2>> readPostByIdV2(@PathVariable Long id) {
+        // post와 comment를 담고 있는 DTO로 바꿈
+        ApiResponse<PostWithCommentResponseDtoV2> response = ApiResponse.ok(postService.readPostByIdV2(id));
+        return ResponseEntity.ok(response);
+
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<PostResponseDto>> updatePost(@PathVariable Long id, @RequestBody PostUpdateRequestDto requestDto) {
         ApiResponse<PostResponseDto> response = ApiResponse.ok("게시글이 성공적으로 수정되었습니다", "UPDATED", postService.updatePost(id, requestDto));
@@ -58,6 +67,7 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
 
     }
+
 
 }
 

@@ -1,5 +1,6 @@
 package com.example.relation.domain.post;
 
+import com.example.relation.domain.comment.Comment;
 import com.example.relation.domain.post.dto.PostUpdateRequestDto;
 import com.example.relation.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
@@ -8,6 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,6 +27,9 @@ public class Post extends BaseTimeEntity {
     private String content;
 
     private String author;
+
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments;
 
     @Builder
     public Post(String title, String content, String author) {

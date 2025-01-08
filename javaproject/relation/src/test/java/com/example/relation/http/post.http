@@ -16,8 +16,12 @@ Content-Type: application/json
 GET http://localhost:8080/posts
 Content-Type: application/json
 
-### find One
-GET http://localhost:8080/posts/2
+### find One V1
+GET http://localhost:8080/posts/1
+Content-Type: application/json
+
+### find One V2
+GET http://localhost:8080/posts/v2/1
 Content-Type: application/json
 
 

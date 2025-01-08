@@ -37,6 +37,12 @@ public class PostService {
         return PostWithCommentResponseDto.from(post, comments);
     }
 
+    public PostWithCommentResponseDtoV2 readPostByIdV2(Long id){
+//        post, comment를 한번에 가져오고 싶다.
+        Post post = postRepository.findByIdWithComment(id).orElseThrow(ResourceNotFoundException::new);
+        return PostWithCommentResponseDtoV2.from(post);
+    }
+
     @Transactional
     public PostResponseDto updatePost(Long id, PostUpdateRequestDto requestDto) {
         Post post = postRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
