@@ -1,10 +1,7 @@
 package com.example.relation.domain.post;
 
 import com.example.relation.*;
-import com.example.relation.domain.post.dto.PostCreateRequestDto;
-import com.example.relation.domain.post.dto.PostListResponseDto;
-import com.example.relation.domain.post.dto.PostResponseDto;
-import com.example.relation.domain.post.dto.PostUpdateRequestDto;
+import com.example.relation.domain.post.dto.*;
 import com.example.relation.global.exception.ResourceNotFoundException;
 import com.example.relation.global.response.ApiResponse;
 import jakarta.validation.Valid;
@@ -26,7 +23,7 @@ public class PostController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(
-                        ApiResponse.ok("게시글이 성공적으로 작성되었습니다","CREATED",
+                        ApiResponse.ok("게시글이 성공적으로 작성되었습니다", "CREATED",
                                 postService.createPost(requestDto)
                         )
                 );
@@ -40,8 +37,9 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<PostResponseDto>> readPostById(@PathVariable Long id) {
-        ApiResponse<PostResponseDto> response = ApiResponse.ok(postService.readPostById(id));
+    public ResponseEntity<ApiResponse<PostWithCommentResponseDto>> readPostById(@PathVariable Long id) {
+        // post와 comment를 담고 있는 DTO로 바꿈
+        ApiResponse<PostWithCommentResponseDto> response = ApiResponse.ok(postService.readPostById(id));
         return ResponseEntity.ok(response);
 
     }
@@ -57,7 +55,7 @@ public class PostController {
     public ResponseEntity<ApiResponse<Void>> deletePost(@PathVariable Long id) {
         postService.deletePost(id);
         ApiResponse<Void> response = ApiResponse.ok("게시글이 성공적으로 삭제되었습니다", "DELETED", null);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
 
     }
 

@@ -2,4 +2,41 @@
 GET https://examples.http-client.intellij.net/get
     ?generated-in=IntelliJ IDEA
 
-###
+### Create One
+POST http://localhost:8080/posts
+Content-Type: application/json
+
+{
+  "title": "new title",
+  "content": "new content",
+  "author": "author"
+}
+
+### find All
+GET http://localhost:8080/posts
+Content-Type: application/json
+
+### find One
+GET http://localhost:8080/posts/2
+Content-Type: application/json
+
+
+### Update One
+PUT http://localhost:8080/posts/2
+Content-Type: application/json
+
+{
+  "title": "Update title",
+  "content": "Update content",
+  "author": "author"
+}
+
+### Delete One
+DELETE http://localhost:8080/posts/42
+Content-Type: application/json
+
+{
+  "title": "Update title",
+  "content": "Update content",
+  "author": "author"
+}
