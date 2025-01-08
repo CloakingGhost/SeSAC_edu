@@ -24,4 +24,14 @@ public class CommentService {
     }
 
 
+    @Transactional
+    public CommentResponseDto updateComment(Long postId, Long commentId, CommentRequestDto requestDto) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(ResourceNotFoundException::new);
+
+        // 스프링이 @트렌잭션얼 안에서 더티체킹 해줌
+        // setter 역할: 비즈니스로직이 포함됨
+        comment = comment.update(requestDto);
+        return CommentResponseDto.from(comment);
+
+    }
 }

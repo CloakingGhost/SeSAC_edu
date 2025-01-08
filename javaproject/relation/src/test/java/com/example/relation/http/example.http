@@ -1,0 +1,15 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=IntelliJ IDEA
+
+### N + 1 basic
+http://localhost:8080/example/nplus1/basic
+Content-Type: application/json
+
+### N + 1 Fetch
+http://localhost:8080/example/nplus1/fetch
+Content-Type: application/json
+
+### N + 1 EntityGraph
+http://localhost:8080/example/nplus1/entity-graph
+Content-Type: application/json

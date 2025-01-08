@@ -46,7 +46,7 @@ public class PostService {
     @Transactional
     public PostResponseDto updatePost(Long id, PostUpdateRequestDto requestDto) {
         Post post = postRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
-        post.update(requestDto);
+        post = post.update(requestDto);
 
         return PostResponseDto.from(post);
     }

@@ -28,7 +28,8 @@ public class Post extends BaseTimeEntity {
 
     private String author;
 
-    @OneToMany(mappedBy = "post")
+    // 커맨트 들고 올 때 다 조회
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     private List<Comment> comments;
 
     @Builder
@@ -38,7 +39,7 @@ public class Post extends BaseTimeEntity {
         this.author = author;
     }
 
-    public Post update(PostUpdateRequestDto requestDto){
+    public Post update(PostUpdateRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
         return this;
