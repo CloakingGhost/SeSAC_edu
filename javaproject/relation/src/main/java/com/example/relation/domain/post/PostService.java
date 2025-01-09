@@ -111,10 +111,20 @@ public class PostService {
 
         postTagRepository.save(postTag);
     }
-
+//
     public PostWithCommentAndTagResponseDto readPostByIdWithCommentAndTag(Long id) {
         //post 가져오자
+//        Post post = postRepository.findByIdWithCommentAndTag(id).orElseThrow(ResourceNotFoundException::new);
+        Post post = postRepository.findByIdWithTag(id).orElseThrow(ResourceNotFoundException::new);
+        List<Comment> comments = commentRepository.findByPostId(id);
+
+        return PostWithCommentAndTagResponseDto.from(post, comments);
+    }
+
+    // batch_size
+    public PostWithCommentAndTagResponseDtoV2 readPostByIdWithCommentAndTagV2(Long id) {
         Post post = postRepository.findByIdWithCommentAndTag(id).orElseThrow(ResourceNotFoundException::new);
-        return PostWithCommentAndTagResponseDto.from(post);
+
+        return PostWithCommentAndTagResponseDtoV2.from(post);
     }
 }

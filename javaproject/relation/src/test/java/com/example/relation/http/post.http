@@ -12,12 +12,12 @@ Content-Type: application/json
   "author": "author 3"
 }
 
-### Create Post-Tag
+### Create Post-Tag 중요
 POST http://localhost:8080/posts/1/tags
 Content-Type: application/json
 
 {
-  "name": "spring"
+  "name": "java"
 }
 
 
@@ -41,12 +41,16 @@ Content-Type: application/json
 GET http://localhost:8080/posts/count-comment
 Content-Type: application/json
 
-### Find All With Comment Count + DTO
+### Find All With Comment Count + DTO 중요
 GET http://localhost:8080/posts/count-comment-dto
 Content-Type: application/json
 
-### Find All With Comment Count + Tags : Error
+### Find All With Comment Count + Tags 중요
 GET http://localhost:8080/posts/1/detail
+Content-Type: application/json
+
+### Find All With Comment Count + Tags V2 중요
+GET http://localhost:8080/posts/1/detail/v2
 Content-Type: application/json
 
 ### Update One
@@ -62,9 +66,3 @@ Content-Type: application/json
 ### Delete One
 DELETE http://localhost:8080/posts/42
 Content-Type: application/json
-
-{
-  "title": "Update title",
-  "content": "Update content",
-  "author": "author"
-}

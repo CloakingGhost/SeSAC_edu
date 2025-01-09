@@ -35,7 +35,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Object[]> findAllWithCommentCount();
 
 
-//    @Query("""
+    //    @Query("""
 //            SELECT new com.example.relation.domain.post.dto.
 //            PostListWithCommentCountResponseDto(
 //                p.id, p.title, p.createdAt, COUNT(c)
@@ -55,12 +55,38 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             """)
     List<PostListWithCommentCountProjection> findAllWithCommentCountDTO();
 
+//    @Query("""
+//        SELECT p FROM Post p
+//        LEFT JOIN FETCH p.comments c
+//        LEFT JOIN FETCH p.postTags pt
+//        LEFT JOIN FETCH pt.tag t
+//        WHERE p.id = :id
+//            """)
+//    Optional<Post> findByIdWithCommentAndTag(@Param("id") Long id);
+
+//    @Query("""
+//        SELECT p FROM Post p
+//        LEFT JOIN  p.comments c
+//        LEFT JOIN  p.postTags pt
+//        LEFT JOIN  pt.tag t
+//        WHERE p.id = :id
+//            """)
+//    Optional<Post> findByIdWithCommentAndTag(@Param("id") Long id);
+    // batch_size
     @Query("""
         SELECT p FROM Post p
-        LEFT JOIN FETCH p.comments c
+        LEFT JOIN p.comments c
+        LEFT JOIN p.postTags pt
+        LEFT JOIN pt.tag t
+        WHERE p.id = :id
+            """)
+    Optional<Post> findByIdWithCommentAndTag(@Param("id") Long id);
+
+    @Query("""
+        SELECT p FROM Post p
         LEFT JOIN FETCH p.postTags pt
         LEFT JOIN FETCH pt.tag t
         WHERE p.id = :id
             """)
-    Optional<Post> findByIdWithCommentAndTag(@Param("id") Long id);
+    Optional<Post> findByIdWithTag(@Param("id") Long id);
 }
