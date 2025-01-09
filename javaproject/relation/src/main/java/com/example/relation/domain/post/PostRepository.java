@@ -55,4 +55,12 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             """)
     List<PostListWithCommentCountProjection> findAllWithCommentCountDTO();
 
+    @Query("""
+        SELECT p FROM Post p
+        LEFT JOIN FETCH p.comments c
+        LEFT JOIN FETCH p.postTags pt
+        LEFT JOIN FETCH pt.tag t
+        WHERE p.id = :id
+            """)
+    Optional<Post> findByIdWithCommentAndTag(@Param("id") Long id);
 }

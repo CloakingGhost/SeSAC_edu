@@ -100,6 +100,17 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.ok(Void.TYPE));
 
     }
+
+    // 게시글을 댓글과 태그들과 함께 조회
+    @GetMapping("/{id}/detail")
+    public ResponseEntity<ApiResponse<PostWithCommentAndTagResponseDto>> readPostByIdWithCommentAndTag(@PathVariable Long id) {
+        return ResponseEntity.ok(
+                ApiResponse.ok(
+                        postService.readPostByIdWithCommentAndTag(id)
+                )
+        );
+    }
+
 }
 
 

@@ -5,12 +5,10 @@ import com.example.relation.domain.comment.CommentRepository;
 import com.example.relation.domain.post.dto.*;
 import com.example.relation.domain.post.entity.Post;
 import com.example.relation.domain.post.entity.PostTag;
-import com.example.relation.domain.tag.TagController;
 import com.example.relation.domain.tag.TagRepository;
 import com.example.relation.domain.tag.dto.Tag;
 import com.example.relation.domain.tag.dto.TagRequestDto;
 import com.example.relation.global.exception.ResourceNotFoundException;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -106,6 +104,17 @@ public class PostService {
         postTag.addTag(tag);
         postTag.addPost(post);
 
+        // 연관관계 편의 메소드
+//        addPost(post) 안에서 할 수도 있음
+//        단, post.getComments == null 예외 발생할 수 있음
+        post.getPostTags().add(postTag);
+
         postTagRepository.save(postTag);
+    }
+
+    public PostWithCommentAndTagResponseDto readPostByIdWithCommentAndTag(Long id) {
+        //post 가져오자
+        Post post = postRepository.findByIdWithCommentAndTag(id).orElseThrow(ResourceNotFoundException::new);
+        return PostWithCommentAndTagResponseDto.from(post);
     }
 }

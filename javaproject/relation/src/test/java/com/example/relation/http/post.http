@@ -45,6 +45,10 @@ Content-Type: application/json
 GET http://localhost:8080/posts/count-comment-dto
 Content-Type: application/json
 
+### Find All With Comment Count + Tags : Error
+GET http://localhost:8080/posts/1/detail
+Content-Type: application/json
+
 ### Update One
 PUT http://localhost:8080/posts/2
 Content-Type: application/json

@@ -2,11 +2,13 @@ package com.example.relation.domain.post.entity;
 
 import com.example.relation.domain.tag.dto.Tag;
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+@Getter
 @Entity
 @EntityListeners(AuditingEntityListener.class)// Entity 의 CRUD 감지
 public class PostTag {
