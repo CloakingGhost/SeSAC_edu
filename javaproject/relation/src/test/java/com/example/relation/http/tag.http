@@ -2,11 +2,14 @@
 GET https://examples.http-client.intellij.net/get
     ?generated-in=IntelliJ IDEA
 
-### create One
-@postId =3
-POST http://localhost:8080/posts/{{postId}}/comments
+### Create
+POST http://localhost:8080/tags
 Content-Type: application/json
 
 {
-  "content": "new content 8"
+  "name" : "javascript"
 }
+
+### Find All
+GET http://localhost:8080/tags
+Content-Type: application/json

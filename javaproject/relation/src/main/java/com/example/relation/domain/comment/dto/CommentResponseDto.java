@@ -1,7 +1,6 @@
 package com.example.relation.domain.comment.dto;
 
 import com.example.relation.domain.comment.Comment;
-import com.example.relation.domain.post.Post;
 import lombok.Builder;
 import lombok.Getter;
 

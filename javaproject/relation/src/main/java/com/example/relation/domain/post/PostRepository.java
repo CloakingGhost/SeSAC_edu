@@ -1,5 +1,7 @@
 package com.example.relation.domain.post;
 
+import com.example.relation.domain.post.dto.PostListWithCommentCountProjection;
+import com.example.relation.domain.post.entity.Post;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,4 +23,36 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @EntityGraph(attributePaths = {"comments"})
     @Query("SELECT p FROM Post p")
     List<Post> findAllWithComments();
+
+    @Query("SELECT p, count(c.id) AS count FROM Post p LEFT JOIN p.comments c where p.id = :id GROUP BY p")
+    List<Object[]> findByIdWithCountComment(@Param("id") Long id);
+
+
+    @Query("SELECT p, COUNT(c) " +
+            "FROM Post p " +
+            "LEFT JOIN p.comments c " +
+            "GROUP BY p")
+    List<Object[]> findAllWithCommentCount();
+
+
+//    @Query("""
+//            SELECT new com.example.relation.domain.post.dto.
+//            PostListWithCommentCountResponseDto(
+//                p.id, p.title, p.createdAt, COUNT(c)
+//            )
+//            FROM Post p
+//            LEFT JOIN p.comments c
+//            GROUP BY p
+//            """)// LEFT JOIN Comment c ON c.post = p
+    @Query("""
+            SELECT p.id as id,
+                   p.title as title,
+                   p.createdAt createdAt,
+                   count(c) as commentCount
+            FROM Post p
+            LEFT JOIN p.comments c
+            GROUP BY p
+            """)
+    List<PostListWithCommentCountProjection> findAllWithCommentCountDTO();
+
 }

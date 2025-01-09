@@ -1,8 +1,7 @@
 package com.example.relation.domain.post;
 
-import com.example.relation.*;
 import com.example.relation.domain.post.dto.*;
-import com.example.relation.global.exception.ResourceNotFoundException;
+import com.example.relation.domain.tag.dto.TagRequestDto;
 import com.example.relation.global.response.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -69,7 +67,39 @@ public class PostController {
     }
 
 
+    @GetMapping("/{id}/count-comment")
+    public ResponseEntity<ApiResponse<List<PostWithCountCommentResponseDto>>> readPostWithCountComment(@PathVariable Long id) {
+        List<PostWithCountCommentResponseDto> body = postService.readPostWithCountComment(id);
+        return ResponseEntity.ok(
+                ApiResponse.ok(body)
+        );
+    }
 
+    @GetMapping("/count-comment")
+    public ResponseEntity<ApiResponse<List<PostListWithCommentCountResponseDto>>> readPostWithCommentCount() {
+        List<PostListWithCommentCountResponseDto> body = postService.readPostsWithCommentCount();
+        return ResponseEntity.ok(
+                ApiResponse.ok(body)
+        );
+    }
+
+    @GetMapping("/count-comment-dto")
+    public ResponseEntity<ApiResponse<List<PostListWithCommentCountProjection>>> readPostWithCommentCountDto() {
+        List<PostListWithCommentCountProjection> body = postService.readPostsWithCommentCountDto();
+        return ResponseEntity.ok(
+                ApiResponse.ok(body)
+        );
+    }
+
+    @PostMapping("/{id}/tags")
+    public ResponseEntity<ApiResponse<Class<Void>>> addTagToPost(
+            @PathVariable Long id,
+            @Valid @RequestBody TagRequestDto requestDto
+    ) {
+        postService.addTagToPost(id, requestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.ok(Void.TYPE));
+
+    }
 }
 
 

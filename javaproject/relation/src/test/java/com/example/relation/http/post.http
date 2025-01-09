@@ -7,10 +7,19 @@ POST http://localhost:8080/posts
 Content-Type: application/json
 
 {
-  "title": "new title",
-  "content": "new content",
-  "author": "author"
+  "title": "new title 3",
+  "content": "new content 3",
+  "author": "author 3"
 }
+
+### Create Post-Tag
+POST http://localhost:8080/posts/1/tags
+Content-Type: application/json
+
+{
+  "name": "spring"
+}
+
 
 ### find All
 GET http://localhost:8080/posts
@@ -24,6 +33,17 @@ Content-Type: application/json
 GET http://localhost:8080/posts/v2/1
 Content-Type: application/json
 
+### find One With Count Comment
+GET http://localhost:8080/posts/1/count-comment
+Content-Type: application/json
+
+### Find All With Count Comment
+GET http://localhost:8080/posts/count-comment
+Content-Type: application/json
+
+### Find All With Comment Count + DTO
+GET http://localhost:8080/posts/count-comment-dto
+Content-Type: application/json
 
 ### Update One
 PUT http://localhost:8080/posts/2
