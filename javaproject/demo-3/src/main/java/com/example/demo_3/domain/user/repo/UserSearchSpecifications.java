@@ -1,4 +1,4 @@
-package com.example.demo_3.domain.user.feature;
+package com.example.demo_3.domain.user.repo;
 
 import com.example.demo_3.domain.user.entity.User;
 import org.springframework.data.jpa.domain.Specification;

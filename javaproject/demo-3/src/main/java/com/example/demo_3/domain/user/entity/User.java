@@ -1,7 +1,7 @@
-package com.example.demo_3.domain.user;
+package com.example.demo_3.domain.user.entity;
 
-import com.example.demo_3.domain.BaseTimeEntity;
-import com.example.demo_3.domain.user.requset.UserUpdateRequestDto;
+import com.example.demo_3.global.common.ApiResponse;
+import com.example.demo_3.domain.user.dto.requset.UserUpdateRequestDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -10,7 +10,7 @@ import org.hibernate.annotations.ColumnDefault;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class User extends BaseTimeEntity {
+public class User extends ApiResponse.BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

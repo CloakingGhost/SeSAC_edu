@@ -1,12 +1,12 @@
-package com.example.demo_3.mvc.service;
+package com.example.demo_3.domain.user;
 
 import com.example.demo_3.domain.user.entity.User;
 import com.example.demo_3.domain.user.dto.requset.UserCreateRequestDto;
 import com.example.demo_3.domain.user.dto.requset.UserUpdateRequestDto;
 import com.example.demo_3.domain.user.dto.response.UserListResponseDto;
 import com.example.demo_3.domain.user.dto.response.UserResponseDto;
-import com.example.demo_3.domain.user.feature.UserSearchSpecifications;
-import com.example.demo_3.mvc.repository.UserRepository;
+import com.example.demo_3.domain.user.repo.UserRepository;
+import com.example.demo_3.domain.user.repo.UserSearchSpecifications;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;

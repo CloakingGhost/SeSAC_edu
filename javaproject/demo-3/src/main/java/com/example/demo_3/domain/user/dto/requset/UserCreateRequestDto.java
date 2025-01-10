@@ -1,4 +1,4 @@
-package com.example.demo_3.domain.user.requset;
+package com.example.demo_3.domain.user.dto.requset;
 
 import com.example.demo_3.domain.user.entity.User;
 import jakarta.validation.constraints.Email;

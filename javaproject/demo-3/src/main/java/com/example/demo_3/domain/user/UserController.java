@@ -1,11 +1,10 @@
-package com.example.demo_3.mvc.controller;
+package com.example.demo_3.domain.user;
 
-import com.example.demo_3.domain.common.ApiResponse;
+import com.example.demo_3.global.common.ApiResponse;
 import com.example.demo_3.domain.user.dto.requset.UserCreateRequestDto;
 import com.example.demo_3.domain.user.dto.requset.UserUpdateRequestDto;
 import com.example.demo_3.domain.user.dto.response.UserListResponseDto;
 import com.example.demo_3.domain.user.dto.response.UserResponseDto;
-import com.example.demo_3.mvc.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
