@@ -1,8 +1,8 @@
-package com.example.demo_3.domain;
+package com.example.demo_3.domain.user;
 
-import com.example.demo_3.dto.requset.UserUpdateRequestDto;
+import com.example.demo_3.domain.BaseTimeEntity;
+import com.example.demo_3.domain.user.requset.UserUpdateRequestDto;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;

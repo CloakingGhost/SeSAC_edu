@@ -1,6 +1,6 @@
-package com.example.demo_3.dto.response;
+package com.example.demo_3.domain.user.response;
 
-import com.example.demo_3.domain.User;
+import com.example.demo_3.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 

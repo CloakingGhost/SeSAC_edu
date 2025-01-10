@@ -1,9 +1,9 @@
-package com.example.demo_3.dto.search;
+package com.example.demo_3.domain.user.feature;
 
-import com.example.demo_3.domain.User;
+import com.example.demo_3.domain.user.entity.User;
 import org.springframework.data.jpa.domain.Specification;
 
-public class UserSpecifications {
+public class UserSearchSpecifications {
 
     public static Specification<User> hasNickname(String nickname) {
         // root == User

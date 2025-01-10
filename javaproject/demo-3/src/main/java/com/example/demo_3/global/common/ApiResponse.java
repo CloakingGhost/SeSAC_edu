@@ -1,7 +1,14 @@
-package com.example.demo_3.dto;
+package com.example.demo_3.domain.common;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Getter
@@ -41,5 +48,20 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<T> error(String message, String code, Map<String, String> errors) {
         return new ApiResponse<>(message, code, null, errors);
+    }
+
+    @Getter
+    @MappedSuperclass
+    @EntityListeners(AuditingEntityListener.class)
+    public static class BaseTimeEntity{
+
+        @CreatedDate // 생성용
+        @Column(updatable = false) // 수정 불가
+        private LocalDateTime createdAt;
+
+        @LastModifiedDate // 수정용
+        private LocalDateTime updatedAt;
+
+
     }
 }

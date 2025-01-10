@@ -1,20 +1,18 @@
 package com.example.demo_3.mvc.service;
 
-import com.example.demo_3.domain.User;
-import com.example.demo_3.dto.requset.UserCreateRequestDto;
-import com.example.demo_3.dto.requset.UserUpdateRequestDto;
-import com.example.demo_3.dto.response.UserListResponseDto;
-import com.example.demo_3.dto.response.UserResponseDto;
-import com.example.demo_3.dto.search.UserSpecifications;
+import com.example.demo_3.domain.user.entity.User;
+import com.example.demo_3.domain.user.dto.requset.UserCreateRequestDto;
+import com.example.demo_3.domain.user.dto.requset.UserUpdateRequestDto;
+import com.example.demo_3.domain.user.dto.response.UserListResponseDto;
+import com.example.demo_3.domain.user.dto.response.UserResponseDto;
+import com.example.demo_3.domain.user.feature.UserSearchSpecifications;
 import com.example.demo_3.mvc.repository.UserRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -61,19 +59,19 @@ public class UserService {
         Specification<User> spec = Specification.where(null);
 
         if (nickname != null) {
-            spec = spec.and(UserSpecifications.hasNickname(nickname));
+            spec = spec.and(UserSearchSpecifications.hasNickname(nickname));
         }
 
         if (minAge != null && maxAge != null) {
-            spec = spec.and(UserSpecifications.hasAge(minAge, maxAge));
+            spec = spec.and(UserSearchSpecifications.hasAge(minAge, maxAge));
         }
 
         if (active != null) {
-            spec = spec.and(UserSpecifications.isActiveStatus(active));
+            spec = spec.and(UserSearchSpecifications.isActiveStatus(active));
         }
 
         if (email != null) {
-            spec = spec.and(UserSpecifications.hasEmailContaining(email));
+            spec = spec.and(UserSearchSpecifications.hasEmailContaining(email));
         }
 
 

@@ -1,10 +1,10 @@
 package com.example.demo_3.mvc.controller;
 
-import com.example.demo_3.dto.ApiResponse;
-import com.example.demo_3.dto.requset.UserCreateRequestDto;
-import com.example.demo_3.dto.requset.UserUpdateRequestDto;
-import com.example.demo_3.dto.response.UserListResponseDto;
-import com.example.demo_3.dto.response.UserResponseDto;
+import com.example.demo_3.domain.common.ApiResponse;
+import com.example.demo_3.domain.user.dto.requset.UserCreateRequestDto;
+import com.example.demo_3.domain.user.dto.requset.UserUpdateRequestDto;
+import com.example.demo_3.domain.user.dto.response.UserListResponseDto;
+import com.example.demo_3.domain.user.dto.response.UserResponseDto;
 import com.example.demo_3.mvc.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
