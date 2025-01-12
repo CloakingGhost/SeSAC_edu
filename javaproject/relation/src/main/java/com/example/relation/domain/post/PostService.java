@@ -8,12 +8,15 @@ import com.example.relation.domain.post.entity.PostTag;
 import com.example.relation.domain.tag.TagRepository;
 import com.example.relation.domain.tag.dto.Tag;
 import com.example.relation.domain.tag.dto.TagRequestDto;
+import com.example.relation.global.exception.DuplicateEntityException;
 import com.example.relation.global.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +47,7 @@ public class PostService {
         return PostWithCommentResponseDto.from(post, comments);
     }
 
-    public PostWithCommentResponseDtoV2 readPostByIdV2(Long id){
+    public PostWithCommentResponseDtoV2 readPostByIdV2(Long id) {
 //        post, comment를 한번에 가져오고 싶다.
         Post post = postRepository.findByIdWithComment(id).orElseThrow(ResourceNotFoundException::new);
         return PostWithCommentResponseDtoV2.from(post);
@@ -65,7 +68,7 @@ public class PostService {
         postRepository.delete(post);
     }
 
-    public List<PostWithCountCommentResponseDto> readPostWithCountComment(Long id){
+    public List<PostWithCountCommentResponseDto> readPostWithCountComment(Long id) {
         List<Object[]> postWithCountComment = postRepository.findByIdWithCountComment(id);
         return postWithCountComment.stream().map(result -> {
             Post post = (Post) result[0];
@@ -73,7 +76,8 @@ public class PostService {
             return PostWithCountCommentResponseDto.from(post, count);
         }).toList();
     }
-    public List<PostListWithCommentCountResponseDto> readPostsWithCommentCount(){
+
+    public List<PostListWithCommentCountResponseDto> readPostsWithCommentCount() {
         List<Object[]> results = postRepository.findAllWithCommentCount();
         return results.stream().map(
                 result -> {
@@ -98,7 +102,16 @@ public class PostService {
     @Transactional
     public void addTagToPost(Long id, TagRequestDto requestDto) {
         Post post = postRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
-        Tag tag = tagRepository.findByName(requestDto.getName()).orElseThrow(ResourceNotFoundException::new);
+//        Tag tag = tagRepository.findByName(requestDto.getName()).orElseThrow(ResourceNotFoundException::new);
+
+        Tag tag = tagRepository.findByName(requestDto.getName())
+                .orElseGet(() -> tagRepository.save(
+                        new Tag(requestDto.getName()))
+                );
+
+        if(postTagRepository.existsByPostAndTag(post, tag)){
+            throw new DuplicateEntityException();
+        }
 
         PostTag postTag = new PostTag();
         postTag.addTag(tag);
@@ -111,7 +124,8 @@ public class PostService {
 
         postTagRepository.save(postTag);
     }
-//
+
+    //
     public PostWithCommentAndTagResponseDto readPostByIdWithCommentAndTag(Long id) {
         //post 가져오자
 //        Post post = postRepository.findByIdWithCommentAndTag(id).orElseThrow(ResourceNotFoundException::new);
@@ -127,4 +141,37 @@ public class PostService {
 
         return PostWithCommentAndTagResponseDtoV2.from(post);
     }
+
+    public List<PostWithCommentAndTagResponseDtoV2> readPostDetail() {
+        return postRepository.findWithCommentAndTag().stream()
+                .map(PostWithCommentAndTagResponseDtoV2::from)
+                .toList();
+    }
+
+    public Stream<PostListResponseDto> readPostsByTag(String tagName) {
+        List<Post> posts = postRepository.findAllByTagName(tagName);
+        return posts.stream().map(
+                PostListResponseDto::from
+        );
+    }
+
+
+    @Transactional
+    public PostWithCommentAndTagResponseDto createPostWithTags(PostCreateWithTagsRequestDto requestDto) {
+        Post post = postRepository.save(requestDto.toEntity()); // @OneToMany 초기화 안해서 에러났음
+        List<String> tagNames = requestDto.getTags();
+
+        for (String tagName : tagNames) {
+            Tag tag = tagRepository.findByName(tagName).orElseGet(() -> {
+                Tag newTag = new Tag(tagName);
+                return tagRepository.save(newTag);
+            });
+            PostTag postTag = new PostTag(post, tag);
+//            postTagRepository.save(postTag); //  Post에 cascade 적용 시 생략 가능
+            post.getPostTags().add(postTag); // 연관관계 편의메소드
+
+        }
+        return PostWithCommentAndTagResponseDto.from(post, new ArrayList<>());
+    }
+
 }

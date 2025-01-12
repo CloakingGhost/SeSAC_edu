@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Tag {
@@ -29,9 +28,8 @@ public class Tag {
     private LocalDateTime createdAt;
 
     @Builder
-    public Tag(String name, LocalDateTime createdAt) {
+    public Tag(String name) {
         this.name = name;
-        this.createdAt = createdAt;
     }
     
 }

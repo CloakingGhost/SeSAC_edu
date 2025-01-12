@@ -12,7 +12,7 @@ Content-Type: application/json
   "author": "author 3"
 }
 
-### Create Post-Tag 중요
+### 특정 Post Tag 추가 중요
 POST http://localhost:8080/posts/1/tags
 Content-Type: application/json
 
@@ -20,10 +20,25 @@ Content-Type: application/json
   "name": "java"
 }
 
+### 단건 : create Post + List<Tag> 비즈니스로직 개념
+POST http://localhost:8080/posts/tags
+Content-Type: application/json
+
+{
+  "title": "널 지켜 줄거라고 믿고 있어",
+  "content": "누구라도 얕보다간 큰일나",
+  "author": "ji-woo",
+  "tags" : ["java", "spring", "react", "special", "limit"]
+}
 
 ### find All
 GET http://localhost:8080/posts
 Content-Type: application/json
+
+### find All + Tag
+GET http://localhost:8080/posts/tags?tagName=java
+Content-Type: application/json
+
 
 ### find One V1
 GET http://localhost:8080/posts/1
@@ -41,16 +56,20 @@ Content-Type: application/json
 GET http://localhost:8080/posts/count-comment
 Content-Type: application/json
 
-### Find All With Comment Count + DTO 중요
+### Find One With Comment Count + DTO 중요
 GET http://localhost:8080/posts/count-comment-dto
 Content-Type: application/json
 
-### Find All With Comment Count + Tags 중요
+### Find One With Comment Count + Tags 중요
 GET http://localhost:8080/posts/1/detail
 Content-Type: application/json
 
-### Find All With Comment Count + Tags V2 중요
-GET http://localhost:8080/posts/1/detail/v2
+### Find One With Comment Count + Tags V2 중요
+GET http://localhost:8080/posts/64/detail/v2
+Content-Type: application/json
+
+### Find All With Comment Count + Tags 중요
+GET http://localhost:8080/posts/detail
 Content-Type: application/json
 
 ### Update One

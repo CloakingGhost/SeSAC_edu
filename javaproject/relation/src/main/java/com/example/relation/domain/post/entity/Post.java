@@ -4,15 +4,14 @@ import com.example.relation.domain.comment.Comment;
 import com.example.relation.domain.post.dto.PostUpdateRequestDto;
 import com.example.relation.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post extends BaseTimeEntity {
     @Id
@@ -31,7 +30,7 @@ public class Post extends BaseTimeEntity {
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PostTag> postTags;
 
     @Builder
@@ -39,6 +38,8 @@ public class Post extends BaseTimeEntity {
         this.title = title;
         this.content = content;
         this.author = author;
+        comments = new ArrayList<>(); // 초기화 안해서 에러 발생
+        postTags = new ArrayList<>(); // 초기화 안해서 에러 발생
     }
 
     public Post update(PostUpdateRequestDto requestDto) {

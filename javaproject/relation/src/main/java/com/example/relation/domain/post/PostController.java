@@ -66,7 +66,7 @@ public class PostController {
 
     }
 
-
+// 특정 게시글 + 댓글 개수
     @GetMapping("/{id}/count-comment")
     public ResponseEntity<ApiResponse<List<PostWithCountCommentResponseDto>>> readPostWithCountComment(@PathVariable Long id) {
         List<PostWithCountCommentResponseDto> body = postService.readPostWithCountComment(id);
@@ -75,6 +75,8 @@ public class PostController {
         );
     }
 
+// 모든 게시글 + 댓글 개수
+    // DB에서 넘겨주는 값을 Entity에 받음
     @GetMapping("/count-comment")
     public ResponseEntity<ApiResponse<List<PostListWithCommentCountResponseDto>>> readPostWithCommentCount() {
         List<PostListWithCommentCountResponseDto> body = postService.readPostsWithCommentCount();
@@ -83,6 +85,8 @@ public class PostController {
         );
     }
 
+// 모든 게시글 + 댓글 개수
+    // DB에서 넘겨주는 값을 DTO에 받음
     @GetMapping("/count-comment-dto")
     public ResponseEntity<ApiResponse<List<PostListWithCommentCountProjection>>> readPostWithCommentCountDto() {
         List<PostListWithCommentCountProjection> body = postService.readPostsWithCommentCountDto();
@@ -91,6 +95,9 @@ public class PostController {
         );
     }
 
+
+
+    // 특정 게시글에 태그 추가
     @PostMapping("/{id}/tags")
     public ResponseEntity<ApiResponse<Class<Void>>> addTagToPost(
             @PathVariable Long id,
@@ -101,7 +108,7 @@ public class PostController {
 
     }
 
-    // 게시글을 댓글과 태그들과 함께 조회
+    // (단건 게시글 + 태그) + (댓글) => DTO
     @GetMapping("/{id}/detail")
     public ResponseEntity<ApiResponse<PostWithCommentAndTagResponseDto>> readPostByIdWithCommentAndTag(@PathVariable Long id) {
         return ResponseEntity.ok(
@@ -111,6 +118,7 @@ public class PostController {
         );
     }
 
+    //단건 게시글 + 댓글 + 태그 => DTO
     @GetMapping("/{id}/detail/v2")
     public ResponseEntity<ApiResponse<PostWithCommentAndTagResponseDtoV2>> readPostByIdWithCommentAndTagV2(@PathVariable Long id) {
         return ResponseEntity.ok(
@@ -119,6 +127,28 @@ public class PostController {
                 )
         );
     }
+
+    // 다건 : 게시글 + 댓글 + 태그 => DTO
+    @GetMapping("/detail")
+    public ResponseEntity<List<PostWithCommentAndTagResponseDtoV2>> readPostsDetail() {
+        return ResponseEntity.ok(
+                postService.readPostDetail()
+        );
+    }
+
+    // 게시글 생성
+    // 다수 태그 저장 포함
+    @PostMapping("/tags")
+    public ResponseEntity<ApiResponse<PostWithCommentAndTagResponseDto>> createPostWithTags(@RequestBody PostCreateWithTagsRequestDto requestDto) {
+        return ResponseEntity.ok(
+                ApiResponse.ok(
+                        postService.createPostWithTags(requestDto)
+                )
+        );
+    }
+
+
+
 }
 
 

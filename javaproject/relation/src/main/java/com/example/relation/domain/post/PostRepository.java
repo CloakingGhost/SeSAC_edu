@@ -74,10 +74,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 //    Optional<Post> findByIdWithCommentAndTag(@Param("id") Long id);
     // batch_size
     @Query("""
-        SELECT p FROM Post p
+        SELECT DISTINCT p FROM Post p
         LEFT JOIN p.comments c
-        LEFT JOIN p.postTags pt
-        LEFT JOIN pt.tag t
+        LEFT JOIN FETCH p.postTags pt
+        LEFT JOIN FETCH pt.tag t
         WHERE p.id = :id
             """)
     Optional<Post> findByIdWithCommentAndTag(@Param("id") Long id);
@@ -89,4 +89,22 @@ public interface PostRepository extends JpaRepository<Post, Long> {
         WHERE p.id = :id
             """)
     Optional<Post> findByIdWithTag(@Param("id") Long id);
+
+    @Query("""
+                SELECT DISTINCT p FROM Post p
+                LEFT JOIN  p.comments
+                LEFT JOIN FETCH p.postTags pt
+                LEFT JOIN FETCH pt.tag
+            """    )
+    List<Post> findWithCommentAndTag();
+
+    @Query("""
+                    SELECT p FROM Post p
+                    JOIN p.postTags pt
+                    JOIN pt.tag t
+                    WHERE t.name = :tagName
+            """)
+    List<Post> findAllByTagName(@Param("tagName") String tagName);
+
+
 }

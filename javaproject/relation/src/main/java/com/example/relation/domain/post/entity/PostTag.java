@@ -3,6 +3,7 @@ package com.example.relation.domain.post.entity;
 import com.example.relation.domain.tag.dto.Tag;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
+@NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)// Entity 의 CRUD 감지
 public class PostTag {
     @Id
@@ -33,6 +35,11 @@ public class PostTag {
     }
 
     public void addTag(Tag tag) {
+        this.tag = tag;
+    }
+
+    public PostTag(Post post, Tag tag) {
+        this.post = post;
         this.tag = tag;
     }
 }
