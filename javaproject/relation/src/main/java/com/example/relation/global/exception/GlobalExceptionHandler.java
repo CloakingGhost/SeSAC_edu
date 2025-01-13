@@ -83,5 +83,10 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(ApiResponse.error(ex.getMessage(), "DUPLICATE_ENTITY"));
     }
-
+    @ExceptionHandler(FileUploadException.class)
+    public ResponseEntity<ApiResponse<Void>> handleFileUpload(DuplicateEntityException ex){
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ApiResponse.error(ex.getMessage(), "DUPLICATE_ENTITY"));
+    }
 }

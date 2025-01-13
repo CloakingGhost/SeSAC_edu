@@ -5,9 +5,11 @@ import com.example.relation.domain.tag.dto.TagRequestDto;
 import com.example.relation.global.response.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -66,7 +68,7 @@ public class PostController {
 
     }
 
-// 특정 게시글 + 댓글 개수
+    // 특정 게시글 + 댓글 개수
     @GetMapping("/{id}/count-comment")
     public ResponseEntity<ApiResponse<List<PostWithCountCommentResponseDto>>> readPostWithCountComment(@PathVariable Long id) {
         List<PostWithCountCommentResponseDto> body = postService.readPostWithCountComment(id);
@@ -75,7 +77,7 @@ public class PostController {
         );
     }
 
-// 모든 게시글 + 댓글 개수
+    // 모든 게시글 + 댓글 개수
     // DB에서 넘겨주는 값을 Entity에 받음
     @GetMapping("/count-comment")
     public ResponseEntity<ApiResponse<List<PostListWithCommentCountResponseDto>>> readPostWithCommentCount() {
@@ -85,7 +87,7 @@ public class PostController {
         );
     }
 
-// 모든 게시글 + 댓글 개수
+    // 모든 게시글 + 댓글 개수
     // DB에서 넘겨주는 값을 DTO에 받음
     @GetMapping("/count-comment-dto")
     public ResponseEntity<ApiResponse<List<PostListWithCommentCountProjection>>> readPostWithCommentCountDto() {
@@ -94,7 +96,6 @@ public class PostController {
                 ApiResponse.ok(body)
         );
     }
-
 
 
     // 특정 게시글에 태그 추가
@@ -147,8 +148,44 @@ public class PostController {
         );
     }
 
+    // 페이지네이션
+    @GetMapping("/pages")
+    public ResponseEntity<ApiResponse<List<PostListResponseDto>>> readPostsWithPage(Pageable pageable) {
+        return ResponseEntity.ok(
+                ApiResponse.ok(
+                        postService.readPostsWithPage(pageable)
+                )
+        );
+    }
 
+    @GetMapping("/pages-detail")
+    public ResponseEntity<ApiResponse<PostListWithPageResponseDto>> readPostsWithPageDetail(Pageable pageable) {
+        return ResponseEntity.ok(
+                ApiResponse.ok(
+                        postService.readPostsWithPageDetail(pageable)
+                )
+        );
+    }
 
+    @GetMapping("/pages-detail-v2")
+    public ResponseEntity<ApiResponse<List<PostWithCommentResponseDtoV2>>> readPostsWithPageDetailV2(Pageable pageable) {
+        return ResponseEntity.ok(
+                ApiResponse.ok(
+                        postService.readPostsWithCommentPage(pageable)
+                )
+        );
+    }
+
+    // 이미지 처리
+    @PostMapping("/images")
+    public ResponseEntity<ApiResponse<PostWithImageResponseDto>> createPostWithImage(
+            @RequestPart(value = "data") PostCreateRequestDto requestDto,
+            @RequestPart(value = "image", required = false) MultipartFile image
+    ) {
+        return ResponseEntity.ok(ApiResponse.ok(
+                postService.createPostWithImage(requestDto, image)
+        ));
+    }
 }
 
 

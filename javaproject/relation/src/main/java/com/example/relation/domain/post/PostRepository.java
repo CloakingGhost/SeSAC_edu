@@ -2,6 +2,8 @@ package com.example.relation.domain.post;
 
 import com.example.relation.domain.post.dto.PostListWithCommentCountProjection;
 import com.example.relation.domain.post.entity.Post;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -35,7 +37,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Object[]> findAllWithCommentCount();
 
 
-    //    @Query("""
+//        @Query("""
 //            SELECT new com.example.relation.domain.post.dto.
 //            PostListWithCommentCountResponseDto(
 //                p.id, p.title, p.createdAt, COUNT(c)
@@ -106,5 +108,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             """)
     List<Post> findAllByTagName(@Param("tagName") String tagName);
 
-
+    @Query("""
+    SELECT p FROM Post p
+    LEFT JOIN p.comments
+""")
+    Page<Post> findPostsWithCommentPage(Pageable pageable);
 }

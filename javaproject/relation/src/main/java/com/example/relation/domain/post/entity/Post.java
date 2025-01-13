@@ -26,6 +26,9 @@ public class Post extends BaseTimeEntity {
 
     private String author;
 
+    @Setter
+    private String imageUrl;
+
     // 커맨트 들고 올 때 다 조회
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     private List<Comment> comments;
