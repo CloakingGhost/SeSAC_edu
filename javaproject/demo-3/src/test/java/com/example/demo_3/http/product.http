@@ -1,0 +1,30 @@
+@base_url=http://localhost:8080/products
+
+### 생성
+POST {{base_url}}
+Content-Type: application/json
+
+{
+  "name": "Java",
+  "price": 10000
+}
+
+
+### 단건 조회
+GET {{base_url}}/1
+
+### 다건 : 전체 조회
+GET {{base_url}}
+
+### 단건 : 수정
+PUT {{base_url}}/1
+Content-Type: application/json
+
+{
+  "name" : "Spring",
+  "price" : "3000"
+}
+
+### 단건 : 삭제
+DELETE {{base_url}}/2
+Content-Type: application/json

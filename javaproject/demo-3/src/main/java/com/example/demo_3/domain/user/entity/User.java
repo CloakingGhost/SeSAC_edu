@@ -1,5 +1,6 @@
 package com.example.demo_3.domain.user.entity;
 
+import com.example.demo_3.domain.team.entity.Team;
 import com.example.demo_3.global.common.ApiResponse;
 import com.example.demo_3.domain.user.dto.requset.UserUpdateRequestDto;
 import jakarta.persistence.*;
@@ -35,6 +36,10 @@ public class User extends ApiResponse.BaseTimeEntity {
     @Setter
     @ColumnDefault("1") // DB 기본값 (MySQL에서는 true를 1로 표현)
     private Boolean isActive; // 코드 기본값
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team")
+    private Team team;
 
     @Builder
     public User(String username, String email, String nickname, Integer age) {
