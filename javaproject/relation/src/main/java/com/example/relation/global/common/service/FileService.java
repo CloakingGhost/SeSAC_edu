@@ -17,7 +17,7 @@ public class FileService {
     @Value("${file.dir}")
     private String fileDir;
 
-    public String saveFile(MultipartFile image) throws FileUploadException {
+    public String saveFile(MultipartFile image) {
         try {
             // 현재 프로젝트 디렉토리
             String projectDir = Paths.get("").toAbsolutePath().toString();

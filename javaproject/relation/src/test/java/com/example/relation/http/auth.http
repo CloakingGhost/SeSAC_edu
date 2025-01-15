@@ -1,0 +1,23 @@
+@base_url =http://localhost:8080/auth
+
+### 단건 : sign up, 회원가입
+POST {{base_url}}/signup
+Content-Type: application/json
+
+{
+  "username": "newUser2",
+  "email": "1232@123.com",
+  "password": "hahah23!"
+}
+
+
+### 단건 : 로그인 + 토큰 발행
+POST {{base_url}}/login
+Content-Type: application/json
+
+{
+  "username": "newUser2",
+  "password": "hahah23!"
+}
+
+

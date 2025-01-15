@@ -1,3 +1,6 @@
+@token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdVc2VyMiIsImlhdCI6MTczNjkyMTQwNCwiZXhwIjoxNzM3MDA3ODA0fQ._iqzkMqvt2W5srCq_Ve54Sj5qaBck4l7ZZRtEq5sX9Q
+@authorization=Bearer {{token}}
+
 ### GET request to example server
 GET https://examples.http-client.intellij.net/get
     ?generated-in=IntelliJ IDEA
@@ -34,10 +37,12 @@ Content-Type: application/json
 ### find All
 GET http://localhost:8080/posts
 Content-Type: application/json
+Authorization: {{authorization}}
 
 ### find All + Tag
-GET http://localhost:8080/posts/tags?tagName=java
+GET http://localhost:8080/posts/tags?tagName=spring
 Content-Type: application/json
+Authorization: {{authorization}}
 
 
 ### find One V1
