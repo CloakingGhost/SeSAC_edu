@@ -42,15 +42,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/auth/**",
-                                "/error",
-                                "/actuator/**"
-                        // 스프링의 에러처리 경로
+                                "/error" // 스프링의 에러처리 경로
                         ).permitAll() // /auth 모든 경로 허용
                         .anyRequest().authenticated() // 나머지 로그인하고 들어와
                 )
                 // User~~~ 이전에 jwtAuth~~ 먼저 실행
-                // jwt 필터를 거지치 않으면 그 다음 필터 실행
-                // User~~~ 글작성 때 사용
+                // jwt 필터를 거지치 않으면 그 다음 필터 실행o
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exception -> exception
                         .accessDeniedHandler(accessDeniedHandler)

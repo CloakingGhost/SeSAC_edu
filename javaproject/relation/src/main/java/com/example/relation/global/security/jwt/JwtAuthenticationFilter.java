@@ -43,13 +43,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             //5. user data를 바탕으로 "authentication", 인증 객체 만들기
             //인증 정보
             Authentication authentication =
+                    //내부에서 전역으로 사용하는 토큰
                     new UsernamePasswordAuthenticationToken(
                             userDetails, // 유저 식별을 위한 기본 정보
                             null, // 비밀번호
                             userDetails.getAuthorities()// 권한
                     );
 
-            //6. 123123123123
+            //6. 인증한 유저 정보를 전역에 저장
             //SecurityContext 의 클래스
             // 인증이 들어있는 공간
             SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +23,25 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
+
+    @Transactional
+    public SignupResponseDto signup(SignupRequestDto requestDto) {
+        // 유저네임 있어?
+        if (userRepository.existsByUsername(requestDto.getUsername())) {
+            throw new IllegalArgumentException("이미 사용중인 아이디입니다.");
+        }
+        // 이메일 있어?
+        if (userRepository.existsByEmail(requestDto.getEmail())) {
+            throw new IllegalArgumentException("이미 사용중인 이메일입니다.");
+        }
+
+        String encodedPassword = passwordEncoder.encode(requestDto.getPassword());
+
+        User user = userRepository.save(requestDto.toEntity(encodedPassword));
+        return SignupResponseDto.from(user);
+
+
+    }
 
     //JWT 생성
     //1. DTO를 받습니다.
@@ -45,25 +63,6 @@ public class AuthService {
         // "jwtTokenProvider" DI
         String jwt = jwtTokenProvider.createToken(authentication);
         return new TokenResponseDto(jwt);
-    }
-
-    @Transactional
-    public SignupResponseDto signup(SignupRequestDto requestDto) {
-        // 유저네임 있어?
-        if (userRepository.existsByUsername(requestDto.getUsername())) {
-            throw new IllegalArgumentException("이미 사용중인 아이디입니다.");
-        }
-        // 이메일 있어?
-        if (userRepository.existsByEmail(requestDto.getEmail())) {
-            throw new IllegalArgumentException("이미 사용중인 이메일입니다.");
-        }
-
-        String encodedPassword = passwordEncoder.encode(requestDto.getPassword());
-
-        User user = userRepository.save(requestDto.toEntity(encodedPassword));
-        return SignupResponseDto.from(user);
-
-
     }
 
 
