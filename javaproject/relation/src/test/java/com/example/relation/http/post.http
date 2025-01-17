@@ -1,4 +1,5 @@
-@token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdVc2VyMiIsImlhdCI6MTczNjkyMTQwNCwiZXhwIjoxNzM3MDA3ODA0fQ._iqzkMqvt2W5srCq_Ve54Sj5qaBck4l7ZZRtEq5sX9Q
+#@token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdVc2VyMiIsImlhdCI6MTczNjk5MDg5MiwiZXhwIjoxNzM3MDc3MjkyfQ.oM25OXgc9CnDQ6dRrudnL8-8M1w5F-44a6_RzImR7eU
+@token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdVc2VyIiwiaWF0IjoxNzM3MDA2MzY5LCJleHAiOjE3MzcwOTI3Njl9.j6U0KRa6Vhv8ROhM3Pn-bWDlrk4aFu4gcTc1rKfG3i4
 @authorization=Bearer {{token}}
 
 ### GET request to example server
@@ -124,3 +125,16 @@ Content-Type: application/json
   "author": "author 3"
 }
 --WebAppBoundary--
+
+/////////////////////////////////////////////////////////////////////////////
+//Post Version 2
+
+### Create One
+POST http://localhost:8080/posts/posts2
+Content-Type: application/json
+Authorization: {{authorization}}
+
+{
+  "title": "new title 5",
+  "content": "new content 0"
+}

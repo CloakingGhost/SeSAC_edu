@@ -11,10 +11,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -40,4 +37,10 @@ public class AuthController {
                 )
         );
     }
+
+    // SecurityConfig에 필터를 통과하도록 추가 설정
+    //시큐리티 필터를 통과하는지 확인 가능
+    @GetMapping("/verify")
+    public void verify(){}
+
 }

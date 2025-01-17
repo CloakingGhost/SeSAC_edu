@@ -1,7 +1,10 @@
-@base_url =http://localhost:8080/auth
+@base_url=http://localhost:8080
+#@token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdVc2VyMiIsImlhdCI6MTczNjk5MDg5MiwiZXhwIjoxNzM3MDc3MjkyfQ.oM25OXgc9CnDQ6dRrudnL8-8M1w5F-44a6_RzImR7eU
+@token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdVc2VyIiwiaWF0IjoxNzM3MDA2MzY5LCJleHAiOjE3MzcwOTI3Njl9.j6U0KRa6Vhv8ROhM3Pn-bWDlrk4aFu4gcTc1rKfG3i4
+@authorization=Bearer {{token}}
 
 ### 단건 : sign up, 회원가입
-POST {{base_url}}/signup
+POST {{base_url}}/auth/signup
 Content-Type: application/json
 
 {
@@ -12,12 +15,22 @@ Content-Type: application/json
 
 
 ### 단건 : 로그인 + 토큰 발행
-POST {{base_url}}/login
+POST {{base_url}}/auth/login
 Content-Type: application/json
 
 {
-  "username": "newUser2",
+  "username": "newUser",
   "password": "hahah23!"
 }
 
 
+### 단건 : 현재 로그인 유저 정보 조회
+GET {{base_url}}/my/profile
+Content-Type: application/json
+Authorization: {{authorization}}
+
+
+### 다건 : 현재 로그인 유저가 작성한 게시물 조회
+GET {{base_url}}/my/posts
+Content-Type: application/json
+Authorization: {{authorization}}

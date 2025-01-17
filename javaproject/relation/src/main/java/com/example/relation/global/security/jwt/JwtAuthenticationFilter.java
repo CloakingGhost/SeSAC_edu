@@ -30,7 +30,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // 1. 요청으로 부터 JWT 가져오기
         String token = getTokenFromRequest(request);
 
-        // 2. 토큰에 값이 있는지 확인 &&
+        // 2. 토큰에 값이 있는지 확인 && 토큰이 이 애플리케이션으로 부터 만들어졌는지
         if (
                 StringUtils.hasText(token)
                         && jwtTokenProvider.validateToken(token) // 위조여부 판단

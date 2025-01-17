@@ -8,6 +8,7 @@ import com.example.relation.domain.post.entity.PostTag;
 import com.example.relation.domain.tag.TagRepository;
 import com.example.relation.domain.tag.dto.Tag;
 import com.example.relation.domain.tag.dto.TagRequestDto;
+import com.example.relation.domain.user.entity.User;
 import com.example.relation.global.common.service.FileService;
 import com.example.relation.global.exception.DuplicateEntityException;
 import com.example.relation.global.exception.ResourceNotFoundException;
@@ -26,6 +27,7 @@ import java.util.stream.Stream;
 @Transactional(readOnly = true)
 public class PostService {
     private final PostRepository postRepository;
+    private final Post2Repository post2Repository;
     private final CommentRepository commentRepository;
     private final TagRepository tagRepository;
     private final PostTagRepository postTagRepository;
@@ -210,5 +212,19 @@ public class PostService {
                 postRepository.save(post)
         );
 
+    }
+
+    /////////////////////////////////////
+    ////// Post Version 2
+    @Transactional
+    public Post2ResponseDto createPost2(
+            Post2CreateWithAuthorRequestDto requestDto, User user) {
+        return Post2ResponseDto.from(
+                post2Repository.save(requestDto.toEntity(user))
+        );
+    }
+
+    public List<Post2ResponseDto> readPosts2() {
+        return post2Repository.findAll().stream().map(Post2ResponseDto::from).toList();
     }
 }
